@@ -1,0 +1,273 @@
+.main-card {
+  width: 40rem;
+  margin: 6rem auto !important;
+  padding: 0;
+}
+
+.card {
+  margin: 0;
+  padding: 1px;
+}
+
+.tabs {
+}
+
+.font-registration {
+}
+
+.font-panel-header {
+  margin-top: auto;
+  margin-bottom: auto;
+
+  font-weight: bold;
+}
+
+.myContainer {
+  display: flex;
+}
+
+.container-form {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.google-mobile {
+  display: none !important;
+}
+
+.google-pc {
+  display: block !important;
+}
+
+.input-container-single {
+  width: calc(50% - 1rem);
+  margin: 0 0.5rem;
+}
+
+.input-container-dual {
+  width: 50%;
+  display: block;
+
+  margin: 0 0.5rem;
+}
+
+.inner-input-container-left {
+  width: 50%;
+  display: block;
+
+  margin: 0 0.5rem;
+  margin-left: 0 !important;
+}
+
+.inner-input-container-right {
+  width: 50%;
+  display: block;
+
+  margin: 0 0.5rem;
+  margin-right: 0 !important;
+}
+
+.next-step-button {
+  width: 50%;
+  min-height: 3rem;
+
+  display: flex;
+
+  border-radius: 2rem !important;
+
+  font-weight: bold;
+
+  margin: 2rem auto;
+}
+
+.next-step-button-dual {
+  width: 40%;
+  min-height: 3rem;
+
+  display: flex;
+
+  border-radius: 2rem !important;
+
+  font-weight: bold;
+
+  margin: 2rem auto;
+}
+
+.myButton {
+  width: 100%;
+  min-height: 3rem !important;
+
+  border-radius: 2rem !important;
+
+  font-weight: bold;
+}
+
+.radio-group-pc {
+  display: block !important;
+}
+
+.radio-group-mobile {
+  display: none !important;
+}
+
+@media screen and (max-device-width: 720px) {
+  .main-card {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .container-form {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0;
+    padding: 0;
+  }
+
+  .card {
+    margin: 0;
+    padding: 0;
+  }
+
+  .tabs {
+    display: none !important;
+  }
+
+  .font-registration {
+    font-size: 2.2rem !important;
+  }
+
+  .font-panel-header {
+    margin-top: auto;
+    margin-bottom: auto;
+
+    font-size: 2.2rem !important;
+    font-weight: bold;
+  }
+
+  .myContainer {
+    display: block;
+  }
+
+  .google-pc {
+    display: none !important;
+  }
+
+  .google-mobile {
+    width: 100%;
+    min-height: 4rem;
+
+    font-size: 2.5rem !important;
+
+    margin: 1rem auto;
+
+    background: white !important;
+    border-radius: 3rem !important;
+    display: flex !important;
+  }
+
+  #googleMobileIcon {
+    height: 4rem;
+    display: flex;
+
+    margin-left: 1rem;
+    margin-right: auto;
+  }
+
+  #googleMobileIcon > svg {
+    height: 4rem;
+  }
+
+  .input-container-single {
+    width: 100%;
+  }
+
+  .input-container-dual {
+    width: 100%;
+    display: block;
+
+    margin: 0 0.5rem;
+  }
+
+  .inner-input-container-right {
+    width: 100%;
+    display: block;
+
+    margin: 0 0.5rem;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  .input {
+    height: 6rem !important;
+
+    font-size: 2.5rem !important;
+  }
+
+  .next-step-button {
+    width: 100%;
+    min-height: 4rem !important;
+
+    border-radius: 3rem !important;
+
+    font-size: 2.5rem !important;
+    font-weight: bold;
+
+    padding: 1.5rem !important;
+    margin: 2rem auto;
+  }
+
+  .next-step-button-dual {
+    width: 100%;
+    min-height: 4rem !important;
+
+    border-radius: 3rem !important;
+
+    display: block;
+
+    font-size: 2.5rem !important;
+    font-weight: bold;
+
+    padding: 1.5rem !important;
+    margin: 2rem auto;
+  }
+
+  .myButton {
+    width: 100%;
+    min-height: 4rem !important;
+
+    border-radius: 3rem !important;
+
+    font-size: 2.5rem !important;
+    font-weight: bold;
+
+    padding: 1.5rem !important;
+    margin: 1rem auto;
+  }
+
+  .myRadio {
+    height: 3rem;
+    width: 3rem;
+
+    margin-right: 2rem;
+  }
+
+  .myRadio-label {
+    margin-left: 3rem !important;
+
+    font-size: 2.5rem;
+  }
+
+  .radio-group-pc {
+    display: none !important;
+  }
+
+  .radio-group-mobile {
+    display: block !important;
+  }
+
+  .memo {
+    height: 8rem !important;
+  }
+}

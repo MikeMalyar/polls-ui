@@ -1,1 +1,52 @@
-Please login
+<div class="card text-center font-registration main-card">
+  <div class="tabs">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item"
+          style="width: 50%; background: #f3f3f3; color: black; font-weight: bold; /*border-bottom-width: 2px; border-bottom-color: gray; border-bottom-style: solid;*/">
+        <a class="nav-link active" id="register-tab" data-toggle="tab"
+           href="#registerContainer"
+           style="background: #f3f3f3; padding: 0; border: 0; margin-top: 1.5rem; margin-bottom: 1.5rem;"
+           role="tab" aria-controls="register" aria-selected="true">
+          Увійти
+        </a>
+      </li>
+      <li class="nav-item"
+          style="width: 50%; background: #707070; color: white; font-weight: bold; padding-top: 1rem; padding-bottom: 1rem; /*border-bottom-width: 2px; border-bottom-color: gray; border-bottom-style: solid;*/">
+        <a class="btn" id="login-tab"
+           href="registration"
+           style="color: white; background-color: #707070; font-weight: bold">
+          Зареєструватися
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div id="myTabContent"
+       style="margin-top: 2px; padding: 1rem; background: #f9f9f9;">
+    <div class="tab-pane fade show active" id="registerContainer" role="tabpanel"
+         aria-labelledby="register-tab">
+      <div class="alert alert-danger" role="alert" id="errorMessage"
+           style="display: none; margin-top: 2rem;">
+      </div>
+      <div class="form-group" style="margin-top: 3rem;">
+        <input type="text" class="input font-registration form-control" id="loginInput"
+               placeholder="Логін"
+               style="min-height: 3rem;">
+      </div>
+      <div class="form-group">
+        <input type="password" class="input font-registration form-control" id="passInput"
+               placeholder="Пароль"
+               style="min-height: 3rem;">
+      </div>
+      <button type="button" class="btn"
+              style="min-height: 3rem; width: 50%; background-color: #707070; color: white;">Увійти
+      </button>
+    </div>
+  </div>
+  <script>
+      $("a.hoverBtn").hover(function () {
+          $(this).css("background-color", "orange");
+      }, function () {
+          $(this).css("background-color", "#3cb63e");
+      });
+  </script>
+</div>
