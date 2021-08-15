@@ -1,0 +1,10 @@
+.main-card {
+  width: 60rem;
+  margin: 3rem auto !important;
+  padding: 0;
+}
+
+
+@media screen and (max-device-width: 720px) {
+
+}

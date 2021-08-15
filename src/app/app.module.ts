@@ -8,12 +8,14 @@ import {FormsModule} from '@angular/forms';
 import {AppRoutingModule} from './app-routing.module';
 import {RouterModule} from '@angular/router';
 import { RegistrationComponent } from './registration/registration.component';
+import { CreatePollComponent } from './create-poll/create-poll.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    CreatePollComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,63 @@
+<div class="card text-center main-card">
+  <div class="card-header" style="background: #f3f3f3; font-weight: bold; padding-top: 1.5rem; padding-bottom: 1.5rem;">Створення опитування</div>
+  <div class="card-body">
+    <form id="createPollForm" #createPollForm="ngForm">
+      <div class="form-group" style="margin-top: 1.5rem;">
+        <input type="text" class="input form-control" id="pollTitle" name="pollTitle" placeholder="Заголовок"
+               style="min-height: 3rem;" #pollTitle="ngModel" [(ngModel)]="poll.title" required autocomplete="off">
+
+        <div *ngIf="pollTitle.errors && (pollTitle.dirty || pollTitle.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+          <div [hidden]="!pollTitle.errors.required">Поле "Заголовок" є обов'язковим для заповнення!</div>
+        </div>
+
+        <textarea class="textarea form-control" id="pollDescription" name="pollDescription"
+                  placeholder="Опис опитування" style="min-height: 3rem; margin-top: 1.5rem;"
+                  #pollDescription="ngModel" [(ngModel)]="poll.description" autocomplete="off"></textarea>
+
+        <div *ngIf="pollDescription.errors && (pollDescription.dirty || pollDescription.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+          <div [hidden]="!pollDescription.errors.required">Поле "Опис опитування" є обов'язковим для заповнення!</div>
+        </div>
+
+        <input type="date" class="input form-control" id="pollDueDate" name="pollDueDate" placeholder="Дата закінчення дії"
+               style="min-height: 3rem; margin-top: 1.5rem;" #pollDueDate="ngModel" [(ngModel)]="poll.dueDate" required autocomplete="off">
+        <label for="pollDueDate" style="display: flex; padding-left: 1rem; color: #707070;">Дата закінчення дії</label>
+
+        <div *ngIf="pollDueDate.errors && (pollDueDate.dirty || pollDueDate.touched)" class="alert alert-danger">
+          <div [hidden]="!pollDueDate.errors.required">Поле "Дата закінчення дії" є обов'язковим для заповнення!</div>
+        </div>
+
+        <div style="display: flex">
+        <input type="checkbox" class="input form-control" id="pollIsRequired" name="pollIsRequired"
+               style="height: 1.5rem; margin-top: 1.5rem; width: 1.5rem; margin-left: 1rem;" #pollIsRequired="ngModel" [(ngModel)]="poll.requiredForFilling" autocomplete="off">
+        <label for="pollIsRequired" style="display: flex; padding-left: 1rem; color: #707070; margin-top: 1.5rem;">Опитування обов'язкове до заповнення</label>
+        </div>
+
+        <p style="margin-top: 1.5rem;">Опитування анонімне для </p>
+
+        <div style="display: flex; margin-top: 1rem;">
+          <div style="display: flex; width: 30%;">
+            <input type="checkbox" class="input form-control" id="pollAnonymousForAccessed" name="pollAnonymousForAccessed"
+                   style="height: 1.5rem; width: 1.5rem; margin-left: 1rem;" #pollAnonymousForAccessed="ngModel" [(ngModel)]="poll.anonymousForAccessed" autocomplete="off">
+            <label for="pollAnonymousForAccessed" style="display: flex; padding-left: 1rem; color: #707070;">тих кому доступне</label>
+          </div>
+
+          <div style="display: flex; width: 30%;">
+            <input type="checkbox" class="input form-control" id="pollAnonymousForOwner" name="pollAnonymousForOwner"
+                   style="height: 1.5rem; width: 1.5rem; margin-left: 1rem;" #pollAnonymousForOwner="ngModel" [(ngModel)]="poll.anonymousForOwner" autocomplete="off">
+            <label for="pollAnonymousForOwner" style="display: flex; padding-left: 1rem; color: #707070;">Вас як власника</label>
+          </div>
+
+          <div style="display: flex; width: 30%;">
+            <input type="checkbox" class="input form-control" id="pollAnonymousForReacted" name="pollAnonymousForReacted"
+                   style="height: 1.5rem; width: 1.5rem; margin-left: 1rem;" #pollAnonymousForReacted="ngModel" [(ngModel)]="poll.anonymousForReacted" autocomplete="off">
+            <label for="pollAnonymousForReacted" style="display: flex; padding-left: 1rem; color: #707070;">тих хто проголосував</label>
+          </div>
+        </div>
+      </div>
+
+      <button [disabled]="!createPollForm.form.valid" type="button" class="btn"
+              style="min-height: 3rem; width: 30%; background-color: #707070; color: white;">Створити опитування</button>
+    </form>
+
+  </div>
+</div>
