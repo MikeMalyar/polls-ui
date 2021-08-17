@@ -18,8 +18,21 @@
           <div [hidden]="!pollDescription.errors.required">Поле "Опис опитування" є обов'язковим для заповнення!</div>
         </div>
 
+        <p style="margin-top: 1.5rem;">Опції </p>
+
+        <div *ngFor="let pollOption of poll.options; index as i;" id="pollOptionDiv-{{i}}" style="margin-top: 1rem; display: flex;">
+          <input type="text" class="input form-control" id="pollOption-{{i}}-{{pollOptionsCount}}" name="pollOption-{{i}}-{{pollOptionsCount}}"
+                 placeholder="Опція" ngModel [(ngModel)]="pollOption.value" required autocomplete="off">
+
+          <button class="btn" style="color: #f3f3f3; background-color: #707070; height: 100%; margin-left: 0.5rem;"
+                  [disabled]="i == 0 || i == 1" (click)="removePollOption(i);">&nbsp;x&nbsp;</button>
+        </div>
+
+        <button class="btn" style="color: #f3f3f3; background-color: #707070; margin-top: 1rem;"
+                (click)="addPollOption();">Додати опцію</button>
+
         <input type="date" class="input form-control" id="pollDueDate" name="pollDueDate" placeholder="Дата закінчення дії"
-               style="min-height: 3rem; margin-top: 1.5rem;" #pollDueDate="ngModel" [(ngModel)]="poll.dueDate" required autocomplete="off">
+               style="min-height: 3rem; margin-top: 3rem;" #pollDueDate="ngModel" [(ngModel)]="poll.dueDate" required autocomplete="off">
         <label for="pollDueDate" style="display: flex; padding-left: 1rem; color: #707070;">Дата закінчення дії</label>
 
         <div *ngIf="pollDueDate.errors && (pollDueDate.dirty || pollDueDate.touched)" class="alert alert-danger">

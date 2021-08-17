@@ -7,4 +7,16 @@ export class Poll {
   anonymousForAccessed: boolean;
   anonymousForOwner: boolean;
   anonymousForReacted: boolean;
+
+  options: PollOption[];
+}
+
+export class PollOption {
+  id: bigint;
+  value: string;
+
+  constructor(id, value) {
+    this.id = id;
+    this.value = value;
+  }
 }
