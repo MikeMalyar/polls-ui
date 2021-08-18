@@ -39,6 +39,25 @@
           <div [hidden]="!pollDueDate.errors.required">Поле "Дата закінчення дії" є обов'язковим для заповнення!</div>
         </div>
 
+        <p style="margin-top: 1.5rem;">Доступ до опитування </p>
+
+        <div style="display: flex; width: 100%;">
+          <div *ngFor="let groupName of chosenGroupNames; index as i;" id="addedGroups-{{i}}"
+               style="margin-top: 1rem; display: flex; min-width: 20%; margin-right: 1rem; margin-bottom: 1rem;">
+            <input type="text" class="input form-control" id="addedGroup-{{i}}" name="addedGroup-{{i}}"
+                   autocomplete="off" value="{{groupName}}" disabled>
+
+            <button class="btn" style="color: #f3f3f3; background-color: #707070; height: 100%;"
+                    (click)="removeGroupOption(i);">&nbsp;x&nbsp;</button>
+        </div>
+        </div>
+
+        <input id="pollAccessInput" name="pollAccessInput" class="form-control" list="pollAccessDatalist" autocomplete="off"
+               placeholder="Вкажіть назву группи" [(ngModel)]="groupNameInputValue" (input)="addGroupOption();">
+        <datalist id="pollAccessDatalist">
+          <option *ngFor="let groupName of groupNames" class="option">{{groupName}}</option>
+        </datalist>
+
         <div style="display: flex">
         <input type="checkbox" class="input form-control" id="pollIsRequired" name="pollIsRequired"
                style="height: 1.5rem; margin-top: 1.5rem; width: 1.5rem; margin-left: 1rem;" #pollIsRequired="ngModel" [(ngModel)]="poll.requiredForFilling" autocomplete="off">

@@ -12,6 +12,11 @@ export class CreatePollComponent implements OnInit {
 
   pollOptionsCount: number;
 
+  groupNames: string[];
+  chosenGroupNames: string[];
+
+  groupNameInputValue = '';
+
   constructor() {
   }
 
@@ -20,6 +25,9 @@ export class CreatePollComponent implements OnInit {
     this.poll.options.push(new PollOption(null, 'Опція 1'), new PollOption(null, 'Опція 2'));
 
     this.pollOptionsCount = this.poll.options.length;
+
+    this.groupNames = ['group 1', 'group 2', 'group 3', 'group 4', 'group 5']; // take from DB
+    this.chosenGroupNames = [];
   }
 
   addPollOption() {
@@ -32,8 +40,22 @@ export class CreatePollComponent implements OnInit {
     }
   }
 
-  filterAccessDropdown() {
+  addGroupOption() {
+    const groupNameInputValue = this.groupNameInputValue;
+    document.getElementById('pollAccessDatalist').childNodes.forEach(child => {
+      if (child.innerText === groupNameInputValue) {
+        this.chosenGroupNames.push(groupNameInputValue);
+        this.groupNames.splice(this.groupNames.indexOf(groupNameInputValue), 1);
 
+        this.groupNameInputValue = '';
+      }
+    });
+  }
+
+  removeGroupOption(i) {
+    const groupName = this.chosenGroupNames[i];
+    this.chosenGroupNames.splice(i, 1);
+    this.groupNames.push(groupName);
   }
 }
 
