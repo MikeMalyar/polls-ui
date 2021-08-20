@@ -9,13 +9,17 @@ import {AppRoutingModule} from './app-routing.module';
 import {RouterModule} from '@angular/router';
 import { RegistrationComponent } from './registration/registration.component';
 import { CreatePollComponent } from './create-poll/create-poll.component';
+import { HeaderComponent } from './header/header.component';
+import { MainPageComponent } from './main-page/main-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-    CreatePollComponent
+    CreatePollComponent,
+    HeaderComponent,
+    MainPageComponent
   ],
   imports: [
     BrowserModule,

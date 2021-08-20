@@ -27,6 +27,7 @@ export class CreatePollComponent implements OnInit {
     this.pollOptionsCount = this.poll.options.length;
 
     this.groupNames = ['group 1', 'group 2', 'group 3', 'group 4', 'group 5']; // take from DB
+    this.groupNames.sort();
     this.chosenGroupNames = [];
   }
 
@@ -43,6 +44,7 @@ export class CreatePollComponent implements OnInit {
   addGroupOption() {
     const groupNameInputValue = this.groupNameInputValue;
     document.getElementById('pollAccessDatalist').childNodes.forEach(child => {
+      // @ts-ignore
       if (child.innerText === groupNameInputValue) {
         this.chosenGroupNames.push(groupNameInputValue);
         this.groupNames.splice(this.groupNames.indexOf(groupNameInputValue), 1);
@@ -56,6 +58,7 @@ export class CreatePollComponent implements OnInit {
     const groupName = this.chosenGroupNames[i];
     this.chosenGroupNames.splice(i, 1);
     this.groupNames.push(groupName);
+    this.groupNames.sort();
   }
 }
 
