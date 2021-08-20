@@ -29,33 +29,64 @@
       <div class="alert alert-danger" role="alert" id="errorMessage"
            style="display: none; margin-top: 2rem;">
       </div>
-      <div class="form-group" style="margin-top: 3rem;">
-        <input type="text" class="input font-registration form-control" id="fullNameInput"
-               placeholder="Повне ім'я"
-               style="min-height: 3rem;">
-      </div>
-      <div class="form-group">
-        <input type="text" class="input font-registration form-control" id="emailInout"
-               placeholder="Електронна пошта"
-               style="min-height: 3rem;">
-      </div>
-      <div class="form-group">
-        <input type="text" class="input font-registration form-control" id="loginInput"
-               placeholder="Логін"
-               style="min-height: 3rem;">
-      </div>
-      <div class="form-group">
-        <input type="password" class="input font-registration form-control" id="passInput"
-               placeholder="Пароль"
-               style="min-height: 3rem;">
-      </div>
-      <div class="form-group">
-        <input type="password" class="input font-registration form-control" id="passRepeatInput"
-               placeholder="Повторіть пароль"
-               style="min-height: 3rem;">
-      </div>
+
+      <form #registrationForm="ngForm">
+        <div class="form-group" style="margin-top: 3rem;">
+          <input type="text" class="input font-registration form-control" id="fullNameInput" name="fullNameInput" required=""
+                 placeholder="Повне ім'я" style="min-height: 3rem;" [(ngModel)]="registrationDto.fullName" #fullNameInput="ngModel">
+
+          <div *ngIf="fullNameInput.errors && (fullNameInput.dirty || fullNameInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+            <div [hidden]="!fullNameInput.errors.required" class="label">Вкажіть повне ім'я</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="input font-registration form-control" id="emailInput" name="emailInput" required=""
+                 placeholder="Електронна пошта" style="min-height: 3rem;" [(ngModel)]="registrationDto.email" #emailInput="ngModel">
+
+          <div *ngIf="emailInput.errors && (emailInput.dirty || emailInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+            <div [hidden]="!emailInput.errors.required" class="label">Вкажіть електронну пошту</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="input font-registration form-control" id="loginInput" name="loginInput"
+                 placeholder="Логін" [(ngModel)]="registrationDto.login" #loginInput="ngModel"
+                 style="min-height: 3rem;" required>
+
+          <div *ngIf="loginInput.errors && (loginInput.dirty || loginInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+            <div [hidden]="!loginInput.errors.required" class="label">Вкажіть логін</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input type="password" class="input font-registration form-control" id="passInput" name="passInput"
+                 placeholder="Пароль" [(ngModel)]="registrationDto.password" #passInput="ngModel"
+                 style="min-height: 3rem;" required>
+
+          <div *ngIf="passInput.errors && (passInput.dirty || passInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+            <div [hidden]="!passInput.errors.required" class="label">Введіть пароль</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input type="password" class="input font-registration form-control" id="passRepeatInput" name="passRepeatInput"
+                 placeholder="Повторіть пароль" [(ngModel)]="registrationDto.repeatPassword" #passRepeatInput="ngModel"
+                 style="min-height: 3rem;" required>
+
+          <div *ngIf="passRepeatInput.errors && (passRepeatInput.dirty || passRepeatInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+            <div [hidden]="!passRepeatInput.errors.required" class="label">Введіть пароль повторно</div>
+          </div>
+
+          <div *ngIf="passRepeatInput.touched && passRepeatInput.value !== '' && passRepeatInput.value !== passInput.value" class="alert alert-danger" style="margin-top: 1rem;">
+            <div class="label">Паролі не співпадають</div>
+          </div>
+        </div>
+      </form>
+
       <button type="button" class="btn"
-              style="min-height: 3rem; width: 50%; background-color: #707070; color: white;">Зареєструватися
+              style="min-height: 3rem; width: 50%; background-color: #707070; color: white;"
+              [disabled]="!registrationForm.valid || passRepeatInput.value !== passInput.value">Зареєструватися
       </button>
 
       <a href="login" class="login-link">Увійти</a>

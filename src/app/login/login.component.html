@@ -29,18 +29,32 @@
       <div class="alert alert-danger" role="alert" id="errorMessage"
            style="display: none; margin-top: 2rem;">
       </div>
-      <div class="form-group" style="margin-top: 3rem;">
-        <input type="text" class="input font-registration form-control" id="loginInput"
-               placeholder="Логін / електронна пошта"
-               style="min-height: 3rem;">
-      </div>
-      <div class="form-group">
-        <input type="password" class="input font-registration form-control" id="passInput"
-               placeholder="Пароль"
-               style="min-height: 3rem;">
-      </div>
+
+      <form #loginForm="ngForm">
+        <div class="form-group" style="margin-top: 3rem;">
+          <input type="text" class="input font-registration form-control" id="loginInput" name="loginInput"
+                 placeholder="Логін / електронна пошта" [(ngModel)]="userLoginDto.login" #loginInput="ngModel"
+                 style="min-height: 3rem;" required>
+
+          <div *ngIf="loginInput.errors && (loginInput.dirty || loginInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+            <div [hidden]="!loginInput.errors.required" class="label">Вкажіть логін / електронну пошту</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <input type="password" class="input font-registration form-control" id="passInput" name="passInput"
+                 placeholder="Пароль" [(ngModel)]="userLoginDto.password" #passInput="ngModel"
+                 style="min-height: 3rem;" required>
+
+          <div *ngIf="passInput.errors && (passInput.dirty || passInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+            <div [hidden]="!passInput.errors.required" class="label">Введіть пароль</div>
+          </div>
+        </div>
+      </form>
+
       <button type="button" class="btn"
-              style="min-height: 3rem; width: 50%; background-color: #707070; color: white;">Увійти
+              style="min-height: 3rem; width: 50%; background-color: #707070; color: white;"
+              [disabled]="!loginForm.valid">Увійти
       </button>
 
       <a href="registration" class="registration-link">Зареєструватися</a>

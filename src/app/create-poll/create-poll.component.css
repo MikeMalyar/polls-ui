@@ -4,7 +4,61 @@
   padding: 0;
 }
 
+.create-btn {
+  min-height: 3rem;
+  width: 30%;
+  background-color: #707070;
+  color: white;
+}
+
+.groups-div {
+  display: flex;
+  width: 100%;
+}
+
+.group-div {
+  margin-top: 1rem;
+  display: flex;
+  min-width: 20%;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+.anonymous-div {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.anonymous-div-i {
+  display: flex;
+  width: 30%;
+}
 
 @media screen and (max-device-width: 720px) {
 
+  .main-card {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .create-btn {
+    width: 60%;
+  }
+
+  .groups-div {
+    display: block;
+  }
+
+  .group-div {
+    margin-right: 0;
+  }
+
+  .anonymous-div {
+    display: block;
+  }
+
+  .anonymous-div-i {
+    width: auto;
+  }
 }

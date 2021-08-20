@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {RegistrationDto} from '../models/dto';
 
 @Component({
   selector: 'app-registration',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor() { }
+  registrationDto = new RegistrationDto();
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

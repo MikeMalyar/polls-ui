@@ -32,8 +32,3 @@ import { MainPageComponent } from './main-page/main-page.component';
 })
 export class AppModule {
 }
-
-export interface UserLoginDto {
-  login: string;
-  password: string;
-}

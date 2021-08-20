@@ -17,6 +17,9 @@ export class CreatePollComponent implements OnInit {
 
   groupNameInputValue = '';
 
+  currentDate = new Date();
+  currentDateString = '';
+
   constructor() {
   }
 
@@ -29,6 +32,27 @@ export class CreatePollComponent implements OnInit {
     this.groupNames = ['group 1', 'group 2', 'group 3', 'group 4', 'group 5']; // take from DB
     this.groupNames.sort();
     this.chosenGroupNames = [];
+
+    this.setCurrentDate();
+  }
+
+  private setCurrentDate() {
+    const today = new Date();
+
+    const dd = today.getDate();
+    const mm = today.getMonth() + 1;
+    const yyyy = today.getFullYear();
+
+    let ddString = dd + '';
+    let mmString = mm + '';
+    if (dd < 10) {
+      ddString = '0' + dd;
+    }
+    if (mm < 10) {
+      mmString = '0' + mm;
+    }
+
+    this.currentDateString = yyyy + '-' + mmString + '-' + ddString;
   }
 
   addPollOption() {
@@ -59,6 +83,10 @@ export class CreatePollComponent implements OnInit {
     this.chosenGroupNames.splice(i, 1);
     this.groupNames.push(groupName);
     this.groupNames.sort();
+
+    if (this.chosenGroupNames.length === 0) {
+      this.poll.requiredForFilling = false;
+    }
   }
 }
 

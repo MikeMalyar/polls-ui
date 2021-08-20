@@ -1,5 +1,5 @@
 import {Component, NgModule, OnInit} from '@angular/core';
-import {UserLoginDto} from '../app.module';
+import {UserLoginDto} from '../models/dto';
 
 @Component({
   selector: 'app-login',
@@ -8,13 +8,9 @@ import {UserLoginDto} from '../app.module';
 })
 export class LoginComponent implements OnInit {
 
-  userLoginDto: UserLoginDto;
+  userLoginDto = new UserLoginDto();
 
   constructor() {
-    this.userLoginDto = {
-      login: '',
-      password: ''
-    };
   }
 
   ngOnInit() {

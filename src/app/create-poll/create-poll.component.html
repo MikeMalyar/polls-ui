@@ -34,7 +34,8 @@
                 (click)="addPollOption();">Додати опцію</button>
 
         <input type="date" class="input form-control" id="pollDueDate" name="pollDueDate" placeholder="Дата закінчення дії"
-               style="min-height: 3rem; margin-top: 3rem;" #pollDueDate="ngModel" [(ngModel)]="poll.dueDate" required autocomplete="off">
+               style="min-height: 3rem; margin-top: 3rem;" #pollDueDate="ngModel" [(ngModel)]="poll.dueDate" required autocomplete="off"
+               min="{{currentDateString}}">
         <label for="pollDueDate" style="display: flex; padding-left: 1rem; color: #707070;">Дата закінчення дії</label>
 
         <div *ngIf="pollDueDate.errors && (pollDueDate.dirty || pollDueDate.touched)" class="alert alert-danger">
@@ -43,9 +44,9 @@
 
         <p style="margin-top: 1.5rem;">Доступ до опитування </p>
 
-        <div style="display: flex; width: 100%;">
+        <div class="groups-div">
           <div *ngFor="let groupName of chosenGroupNames; index as i;" id="addedGroups-{{i}}"
-               style="margin-top: 1rem; display: flex; min-width: 20%; margin-right: 1rem; margin-bottom: 1rem;">
+               class="group-div">
             <input type="text" class="input form-control" id="addedGroup-{{i}}" name="addedGroup-{{i}}"
                    autocomplete="off" value="{{groupName}}" disabled>
 
@@ -62,26 +63,27 @@
 
         <div style="display: flex">
         <input type="checkbox" class="input form-control" id="pollIsRequired" name="pollIsRequired"
-               style="height: 1.5rem; margin-top: 1.5rem; width: 1.5rem; margin-left: 1rem;" #pollIsRequired="ngModel" [(ngModel)]="poll.requiredForFilling" autocomplete="off">
+               style="height: 1.5rem; margin-top: 1.5rem; width: 1.5rem; margin-left: 1rem;"
+               [(ngModel)]="poll.requiredForFilling" autocomplete="off" [disabled]="chosenGroupNames.length == 0">
         <label for="pollIsRequired" style="display: flex; padding-left: 1rem; color: #707070; margin-top: 1.5rem;">Опитування обов'язкове до заповнення</label>
         </div>
 
         <p style="margin-top: 1.5rem;">Опитування анонімне для </p>
 
-        <div style="display: flex; margin-top: 1rem;">
-          <div style="display: flex; width: 30%;">
+        <div class="anonymous-div">
+          <div class="anonymous-div-i">
             <input type="checkbox" class="input form-control" id="pollAnonymousForAccessed" name="pollAnonymousForAccessed"
                    style="height: 1.5rem; width: 1.5rem; margin-left: 1rem;" #pollAnonymousForAccessed="ngModel" [(ngModel)]="poll.anonymousForAccessed" autocomplete="off">
             <label for="pollAnonymousForAccessed" style="display: flex; padding-left: 1rem; color: #707070;">тих кому доступне</label>
           </div>
 
-          <div style="display: flex; width: 30%;">
+          <div class="anonymous-div-i">
             <input type="checkbox" class="input form-control" id="pollAnonymousForOwner" name="pollAnonymousForOwner"
                    style="height: 1.5rem; width: 1.5rem; margin-left: 1rem;" #pollAnonymousForOwner="ngModel" [(ngModel)]="poll.anonymousForOwner" autocomplete="off">
             <label for="pollAnonymousForOwner" style="display: flex; padding-left: 1rem; color: #707070;">Вас як власника</label>
           </div>
 
-          <div style="display: flex; width: 30%;">
+          <div class="anonymous-div-i">
             <input type="checkbox" class="input form-control" id="pollAnonymousForReacted" name="pollAnonymousForReacted"
                    style="height: 1.5rem; width: 1.5rem; margin-left: 1rem;" #pollAnonymousForReacted="ngModel" [(ngModel)]="poll.anonymousForReacted" autocomplete="off">
             <label for="pollAnonymousForReacted" style="display: flex; padding-left: 1rem; color: #707070;">тих хто проголосував</label>
@@ -89,8 +91,7 @@
         </div>
       </div>
 
-      <button [disabled]="!createPollForm.form.valid" type="button" class="btn"
-              style="min-height: 3rem; width: 30%; background-color: #707070; color: white;">Створити опитування</button>
+      <button [disabled]="!createPollForm.form.valid" type="button" class="btn create-btn">Створити опитування</button>
     </form>
 
   </div>
