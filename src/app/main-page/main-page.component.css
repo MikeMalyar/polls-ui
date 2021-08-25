@@ -8,3 +8,19 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+
+.btn-outline-secondary:hover {
+  background-color: #707070;
+  border-color: #707070;
+}
+
+.btn-check:checked + .btn-outline-secondary, .btn-check:active + .btn-outline-secondary, .btn-outline-secondary:active, .btn-outline-secondary.active, .btn-outline-secondary.dropdown-toggle.show {
+  background-color: darkgray;
+  border-color: #707070;
+}
+
+.required-border {
+  border-radius: 5px;
+  border-style: solid;
+  border-color: red;
+}

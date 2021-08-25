@@ -45,24 +45,24 @@
   </div>
 
   <div style="width: 60%; background-color: #f9f9f9; margin-left: 0.5rem; border-color: darkgrey; border-width: 1px;
-              border-style: solid; border-radius: 5px;">
+              border-style: solid; border-radius: 5px; margin-bottom: 3rem;">
     <a href="createPoll" class="btn"
             style="min-height: 2rem; width: 50%; background-color: #707070; margin-top: 0.5rem; color: white; margin-left: 25%;">Створити опитування
     </a>
 
     <div *ngFor="let poll of polls" id="poll-div-{{poll.id}}" style="background-color: white; margin-left: 1rem; margin-right: 1rem;
-         margin-top: 1rem; border-radius: 5px; padding: 1rem;">
+         margin-top: 1rem; border-radius: 5px; padding: 1rem;" [ngClass]="poll.requiredForFilling === true ? 'required-border' : ''">
       <h6>{{poll.title}}</h6>
 
       <p *ngIf="poll.description" id="poll-desc-{{poll.id}}" class="text-with-three-dots three-lines-text" style="margin-top: 1rem; margin-bottom: 0;">{{poll.description}}</p>
 
-      <a style="margin-top: 0; color: #707070;" href="#" (click)="disableTextOverflow('poll-desc-' + poll.id)">(...)</a>>
+      <button style="margin-top: 0; color: #707070; padding: 0;" class="btn bi bi-zoom-in" (click)="disableTextOverflow('poll-desc-' + poll.id)"></button>
 
       <div *ngIf="poll.options.length > 0" style="margin-top: 1rem;">
-        <div *ngFor="let option of poll.options" class="form-check">
-          <input class="form-check-input" type="radio" name="poll-{{poll.id}}-option"
+        <div *ngFor="let option of poll.options" class="form-check" style="margin-bottom: 0.5rem; width: 100%; padding-left: 0;">
+          <input class="btn-check" type="radio" name="poll-{{poll.id}}-option"
                  id="poll-{{poll.id}}-option-{{option.id}}" (input)="selectOption(poll.id);">
-          <label class="form-check-label" for="poll-{{poll.id}}-option-{{option.id}}">
+          <label class="btn btn-outline-secondary" for="poll-{{poll.id}}-option-{{option.id}}" style="width: 100%;">
             {{option.value}}
           </label>
         </div>

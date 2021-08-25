@@ -33,6 +33,7 @@ export class MainPageComponent implements OnInit {
     poll1.title = 'Тестове опитування 1';
     poll1.description = 'Опис цього опитування призначений для перевірки його відображення у веб браузері.'.repeat(3);
     poll1.options = [new PollOption(1, 'Опція 1'), new PollOption(2, 'Опція 2')];
+    poll1.requiredForFilling = true;
     this.polls.push(poll1);
 
     const poll2 = new Poll();
