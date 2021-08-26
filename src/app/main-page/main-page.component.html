@@ -1,8 +1,8 @@
 <app-header></app-header>
 
-<div style="width: 60rem; margin: auto; display: flex; padding-top: 3rem;">
+<div class="main-page-main-div">
 
-  <div style="width: 20%;">
+  <div class="main-page-left-div">
     <div style="border-color: darkgrey; border-width: 1px; border-style: solid; border-radius: 5px; text-align: center;
                 background-color: #f9f9f9;">
       <p style="margin-top: 1rem;">{{userName}}</p>
@@ -44,10 +44,8 @@
     </div>
   </div>
 
-  <div style="width: 60%; background-color: #f9f9f9; margin-left: 0.5rem; border-color: darkgrey; border-width: 1px;
-              border-style: solid; border-radius: 5px; margin-bottom: 3rem;">
-    <a href="createPoll" class="btn"
-            style="min-height: 2rem; width: 50%; background-color: #707070; margin-top: 0.5rem; color: white; margin-left: 25%;">Створити опитування
+  <div class="main-page-center-div">
+    <a href="createPoll" class="btn btn-create-poll">Створити опитування
     </a>
 
     <div *ngFor="let poll of polls" id="poll-div-{{poll.id}}" style="background-color: white; margin-left: 1rem; margin-right: 1rem;
@@ -67,8 +65,7 @@
           </label>
         </div>
 
-        <button class="btn" id="poll-submit-{{poll.id}}"
-                style="min-height: 2rem; width: 50%; background-color: #707070; margin-top: 1rem; color: white; display: none;">Проголосувати
+        <button class="btn btn-vote" id="poll-submit-{{poll.id}}">Проголосувати
         </button>
       </div>
     </div>

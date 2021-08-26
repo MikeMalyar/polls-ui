@@ -24,3 +24,72 @@
   border-style: solid;
   border-color: red;
 }
+
+.main-page-main-div {
+  width: 60rem;
+  margin: auto;
+  display: flex;
+  padding-top: 3rem;
+}
+
+.main-page-left-div {
+  width: 20%;
+}
+
+.main-page-center-div {
+  width: 60%;
+  background-color: #f9f9f9;
+  margin-left: 0.5rem;
+  border-color: darkgrey;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  margin-bottom: 3rem;
+}
+
+.btn-create-poll {
+  min-height: 2rem;
+  width: 50%;
+  background-color: #707070;
+  margin-top: 0.5rem;
+  color: white;
+  margin-left: 25%;
+}
+
+.btn-vote {
+  min-height: 2rem;
+  width: 50%;
+  background-color: #707070;
+  margin-top: 1rem;
+  color: white;
+  display: none;
+}
+
+@media screen and (max-device-width: 720px) {
+
+  .main-page-main-div {
+    width: 100%;
+    display: block;
+  }
+
+  .main-page-left-div {
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  .main-page-center-div {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 1rem;
+  }
+
+  .btn-create-poll {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 5%;
+  }
+
+  .btn-vote {
+    width: 100%;
+  }
+}
