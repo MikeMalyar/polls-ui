@@ -9,14 +9,21 @@ export class Poll {
   anonymousForReacted: boolean;
 
   options: PollOption[];
+
+  haveMeVoted: boolean;
 }
 
 export class PollOption {
   id: bigint;
   value: string;
+  votes: number;
 
-  constructor(id, value) {
+  haveMeVoted: boolean;
+
+  constructor(id, value, votes, haveMeVoted) {
     this.id = id;
     this.value = value;
+    this.votes = votes;
+    this.haveMeVoted = haveMeVoted;
   }
 }

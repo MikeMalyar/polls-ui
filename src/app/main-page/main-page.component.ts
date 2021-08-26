@@ -32,7 +32,7 @@ export class MainPageComponent implements OnInit {
     poll1.id = 1;
     poll1.title = 'Тестове опитування 1';
     poll1.description = 'Опис цього опитування призначений для перевірки його відображення у веб браузері.'.repeat(3);
-    poll1.options = [new PollOption(1, 'Опція 1'), new PollOption(2, 'Опція 2')];
+    poll1.options = [new PollOption(1, 'Опція 1', 8, false), new PollOption(2, 'Опція 2', 5, false)];
     poll1.requiredForFilling = true;
     this.polls.push(poll1);
 
@@ -41,7 +41,7 @@ export class MainPageComponent implements OnInit {
     poll2.id = 2;
     poll2.title = 'Тестове опитування 2';
     poll2.description = 'Опис цього тестового опитування №2 призначений для перевірки його відображення у веб браузері.'.repeat(3);
-    poll2.options = [new PollOption(3, 'Тестова опція 1'), new PollOption(4, 'Тестова опція 2')];
+    poll2.options = [new PollOption(3, 'Тестова опція 1', 2, false), new PollOption(4, 'Тестова опція 2', 32, false)];
     this.polls.push(poll2);
   }
 
@@ -58,5 +58,34 @@ export class MainPageComponent implements OnInit {
 
   selectOption(pollId) {
     document.getElementById('poll-submit-' + pollId).style.display = 'block';
+  }
+
+  vote(pollId) {
+    const options = document.getElementsByName('poll-' + pollId + '-option');
+    let optionId = 0;
+    options.forEach(o => {
+      // @ts-ignore
+      if (o.checked === true) {
+        // @ts-ignore
+        optionId = o.value;
+      }
+    });
+    const poll = this.polls.find(p => p.id === pollId);
+    const option = poll.options.find(o => Number(Number(o.id) === Number(optionId)));
+
+    poll.haveMeVoted = true;
+    option.haveMeVoted = true;
+
+    option.votes++;
+  }
+
+  calculateOptionPercentage(pollId, optionId) {
+    const options = this.polls.find(p => p.id === pollId).options;
+    const option = options.find(o => o.id === optionId);
+
+    let sum = 0;
+    options.map(o => o.votes).forEach(v => sum += v);
+
+    return Math.round(Number(option.votes) / sum * 100);
   }
 }

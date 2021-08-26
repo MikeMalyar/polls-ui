@@ -25,7 +25,7 @@ export class CreatePollComponent implements OnInit {
 
   ngOnInit() {
     this.poll.options = [];
-    this.poll.options.push(new PollOption(null, 'Опція 1'), new PollOption(null, 'Опція 2'));
+    this.poll.options.push(new PollOption(null, 'Опція 1', 0), new PollOption(null, 'Опція 2', 0));
 
     this.pollOptionsCount = this.poll.options.length;
 
@@ -56,7 +56,7 @@ export class CreatePollComponent implements OnInit {
   }
 
   addPollOption() {
-    this.poll.options.push(new PollOption(null, 'Опція ' + ++this.pollOptionsCount));
+    this.poll.options.push(new PollOption(null, 'Опція ' + ++this.pollOptionsCount, 0, false));
   }
 
   removePollOption(i) {
