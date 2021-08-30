@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Poll, PollOption} from '../models/poll';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-create-poll',
@@ -20,13 +21,14 @@ export class CreatePollComponent implements OnInit {
   currentDate = new Date();
   currentDateString = '';
 
-  constructor() {
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.poll.options = [];
     this.poll.options.push(new PollOption(null, 'Опція 1', 0, false),
-      new PollOption(null, 'Опція 2', 0, false));
+      new PollOption(null, 'Опція 2', 0, false));   // take from DB
+    this.poll.id = Number(this.route.snapshot.paramMap.get('pollId'));
 
     this.pollOptionsCount = this.poll.options.length;
 

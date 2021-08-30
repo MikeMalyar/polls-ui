@@ -1,5 +1,5 @@
 export class Poll {
-  id: bigint;
+  id: number;
   title: string;
   description: string;
   dueDate: string;
@@ -14,7 +14,7 @@ export class Poll {
 }
 
 export class PollOption {
-  id: bigint;
+  id: number;
   value: string;
   votes: number;
 

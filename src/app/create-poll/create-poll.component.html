@@ -1,7 +1,8 @@
 <app-header></app-header>
 
 <div class="card text-center main-card">
-  <div class="card-header" style="background: #f3f3f3; font-weight: bold; padding-top: 1.5rem; padding-bottom: 1.5rem;">Створення опитування</div>
+  <div *ngIf="!poll.id" class="card-header" style="background: #f3f3f3; font-weight: bold; padding-top: 1.5rem; padding-bottom: 1.5rem;">Створення опитування</div>
+  <div *ngIf="poll.id" class="card-header" style="background: #f3f3f3; font-weight: bold; padding-top: 1.5rem; padding-bottom: 1.5rem;">Редагування опитування</div>
   <div class="card-body">
     <form id="createPollForm" #createPollForm="ngForm">
       <div class="form-group" style="margin-top: 1.5rem;">
@@ -91,7 +92,8 @@
         </div>
       </div>
 
-      <button [disabled]="!createPollForm.form.valid" type="button" class="btn create-btn" style="margin-top: 1rem;">Створити опитування</button>
+      <button *ngIf="!poll.id" [disabled]="!createPollForm.form.valid" type="button" class="btn create-btn" style="margin-top: 1.5rem;">Створити опитування</button>
+      <button *ngIf="poll.id" [disabled]="!createPollForm.form.valid" type="button" class="btn create-btn" style="margin-top: 1.5rem;">Редагувати опитування</button>
     </form>
 
   </div>
