@@ -62,7 +62,7 @@
         </datalist>
 
         <div style="display: flex">
-        <input type="checkbox" class="input form-control" id="pollIsRequired" name="pollIsRequired"
+        <input type="checkbox" class="input form-check" id="pollIsRequired" name="pollIsRequired"
                style="height: 1.5rem; margin-top: 1.5rem; width: 1.5rem; margin-left: 1rem;"
                [(ngModel)]="poll.requiredForFilling" autocomplete="off" [disabled]="chosenGroupNames.length == 0">
         <label for="pollIsRequired" style="display: flex; padding-left: 1rem; color: #707070; margin-top: 1.5rem;">Опитування обов'язкове до заповнення</label>
@@ -72,26 +72,26 @@
 
         <div class="anonymous-div">
           <div class="anonymous-div-i">
-            <input type="checkbox" class="input form-control" id="pollAnonymousForAccessed" name="pollAnonymousForAccessed"
+            <input type="checkbox" class="input form-check" id="pollAnonymousForAccessed" name="pollAnonymousForAccessed"
                    style="height: 1.5rem; width: 1.5rem; margin-left: 1rem;" #pollAnonymousForAccessed="ngModel" [(ngModel)]="poll.anonymousForAccessed" autocomplete="off">
             <label for="pollAnonymousForAccessed" style="display: flex; padding-left: 1rem; color: #707070;">тих кому доступне</label>
           </div>
 
           <div class="anonymous-div-i">
-            <input type="checkbox" class="input form-control" id="pollAnonymousForOwner" name="pollAnonymousForOwner"
+            <input type="checkbox" class="input form-check" id="pollAnonymousForOwner" name="pollAnonymousForOwner"
                    style="height: 1.5rem; width: 1.5rem; margin-left: 1rem;" #pollAnonymousForOwner="ngModel" [(ngModel)]="poll.anonymousForOwner" autocomplete="off">
             <label for="pollAnonymousForOwner" style="display: flex; padding-left: 1rem; color: #707070;">Вас як власника</label>
           </div>
 
           <div class="anonymous-div-i">
-            <input type="checkbox" class="input form-control" id="pollAnonymousForReacted" name="pollAnonymousForReacted"
+            <input type="checkbox" class="input form-check" id="pollAnonymousForReacted" name="pollAnonymousForReacted"
                    style="height: 1.5rem; width: 1.5rem; margin-left: 1rem;" #pollAnonymousForReacted="ngModel" [(ngModel)]="poll.anonymousForReacted" autocomplete="off">
             <label for="pollAnonymousForReacted" style="display: flex; padding-left: 1rem; color: #707070;">тих хто проголосував</label>
           </div>
         </div>
       </div>
 
-      <button [disabled]="!createPollForm.form.valid" type="button" class="btn create-btn">Створити опитування</button>
+      <button [disabled]="!createPollForm.form.valid" type="button" class="btn create-btn" style="margin-top: 1rem;">Створити опитування</button>
     </form>
 
   </div>
