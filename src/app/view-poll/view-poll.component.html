@@ -9,9 +9,12 @@
 
       <div *ngIf="!(poll.anonymousForAccessed || poll.anonymousForReacted && !poll.haveMeVoted)" style="text-align: left;">
         <h5 style="margin-left: 1rem; margin-top: 1rem;">Голоси:</h5>
-        <div *ngFor="let option of poll.options" style="margin-bottom: 2rem; margin-left: 1rem; margin-top: 1rem;">
-          <p style="font-weight: bold;">{{option.value}}</p>
-          <p *ngFor="let username of option.usersVoted">{{username}}</p>
+        <div *ngFor="let option of poll.options; index as optionIndex" style="margin-bottom: 2rem; margin-left: 1rem; margin-top: 1rem;">
+          <p style="font-weight: bold; margin: 0;">{{option.value}}</p>
+
+          <p *ngFor="let username of option.usersVoted; index as i;" style="margin: 0;"><span *ngIf="i < displayVotesCount[optionIndex]">{{username}}</span></p>
+
+          <button style="margin-top: 0; color: #707070; padding: 0;" class="btn bi" [ngClass]="this.displayVotesCount[optionIndex] === DISPLAY_VOTES_COUNT ? 'bi-zoom-in' : 'bi-zoom-out'" (click)="displayAllVotes(optionIndex)"></button>
         </div>
       </div>
     </div>
@@ -19,15 +22,14 @@
 
   <div class="view-poll-center-div">
 
-    <div style="background-color: white; margin-left: 1rem; margin-right: 1rem;
-         margin-top: 1rem; border-radius: 5px; padding: 1rem;" [ngClass]="poll.requiredForFilling === true ? 'required-border' : ''">
+    <div style="background-color: white; margin: 1rem; border-radius: 5px; padding: 1rem;" [ngClass]="poll.requiredForFilling === true ? 'required-border' : ''">
       <h6>{{poll.title}}</h6>
 
       <h6 *ngIf="poll.requiredForFilling === true && !poll.haveMeVoted" style="margin-top: 1rem; color: red;">Це опитування обов'язкове для заповнення</h6>
 
       <p *ngIf="poll.description" id="poll-desc-{{poll.id}}" class="text-with-three-dots ten-lines-text" style="margin-top: 1rem; margin-bottom: 0;">{{poll.description}}</p>
 
-      <button style="margin-top: 0; color: #707070; padding: 0;" class="btn bi bi-zoom-in" (click)="disableTextOverflow('poll-desc-' + poll.id)"></button>
+      <button style="margin-top: 0; color: #707070; padding: 0;" class="btn bi" [ngClass]="this.descriptionFullDisplayed ? 'bi-zoom-out' : 'bi-zoom-in'" (click)="disableTextOverflow('poll-desc-' + poll.id)"></button>
 
       <div *ngIf="poll.options.length > 0" style="margin-top: 1rem;">
         <div *ngFor="let option of poll.options" style="margin-bottom: 0.5rem;">
@@ -48,6 +50,24 @@
         </div>
 
         <button *ngIf="!poll.haveMeVoted" class="btn btn-vote" id="poll-submit-{{poll.id}}" (click)="vote(poll.id);">Проголосувати</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="view-poll-left-div-mobile">
+    <div style="border-color: darkgrey; border-width: 1px; border-style: solid; border-radius: 5px; text-align: center;
+                background-color: #f9f9f9;">
+      <p *ngIf="poll.anonymousForAccessed || poll.anonymousForReacted && !poll.haveMeVoted" style="margin-top: 1rem;">Опитування анонімне для Вас</p>
+
+      <div *ngIf="!(poll.anonymousForAccessed || poll.anonymousForReacted && !poll.haveMeVoted)" style="text-align: left;">
+        <h5 style="margin-left: 1rem; margin-top: 1rem;">Голоси:</h5>
+        <div *ngFor="let option of poll.options; index as optionIndex" style="margin-bottom: 2rem; margin-left: 1rem; margin-top: 1rem;">
+          <p style="font-weight: bold; margin: 0;">{{option.value}}</p>
+
+          <p *ngFor="let username of option.usersVoted; index as i;" style="margin: 0;"><span *ngIf="i < displayVotesCount[optionIndex]">{{username}}</span></p>
+
+          <button style="margin-top: 0; color: #707070; padding: 0;" class="btn bi" [ngClass]="this.displayVotesCount[optionIndex] === DISPLAY_VOTES_COUNT ? 'bi-zoom-in' : 'bi-zoom-out'" (click)="displayAllVotes(optionIndex)"></button>
+        </div>
       </div>
     </div>
   </div>

@@ -8,7 +8,12 @@ import {Poll, PollOption} from '../models/poll';
 })
 export class ViewPollComponent implements OnInit {
 
+  DISPLAY_VOTES_COUNT = 3;
+
   poll: Poll;
+
+  displayVotesCount = [];
+  descriptionFullDisplayed = false;
 
   constructor() {
   }
@@ -24,6 +29,10 @@ export class ViewPollComponent implements OnInit {
       new PollOption(3, 'Опція 3', 7, false)];
     this.poll.requiredForFilling = true;
     this.poll.anonymousForReacted = true;
+
+    this.poll.options.forEach(_ => {
+      this.displayVotesCount.push(this.DISPLAY_VOTES_COUNT);
+    });
   }
 
   disableTextOverflow(id) {
@@ -35,6 +44,7 @@ export class ViewPollComponent implements OnInit {
       paragraph.classList.add('text-with-three-dots');
       paragraph.classList.add('ten-lines-text');
     }
+    this.descriptionFullDisplayed = !this.descriptionFullDisplayed;
   }
 
   selectOption(pollId) {
@@ -74,5 +84,13 @@ export class ViewPollComponent implements OnInit {
     this.poll.options.forEach(option => {
       option.usersVoted = ['Mykhailo Maliarchuk', 'Test User 1', 'Test User 2', 'Test User 3', 'Test User 4'];  // take from DB
     });
+  }
+
+  displayAllVotes(optionIndex) {
+    if (this.displayVotesCount[optionIndex] === this.DISPLAY_VOTES_COUNT) {
+      this.displayVotesCount[optionIndex] = this.poll.options[optionIndex].usersVoted.length;
+    } else {
+      this.displayVotesCount[optionIndex] = this.DISPLAY_VOTES_COUNT;
+    }
   }
 }

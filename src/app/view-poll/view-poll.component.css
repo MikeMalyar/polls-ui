@@ -9,6 +9,10 @@
   width: 20%;
 }
 
+.view-poll-left-div-mobile {
+  display: none;
+}
+
 .view-poll-center-div {
   width: 80%;
   background-color: #f9f9f9;
@@ -48,4 +52,33 @@
   margin-top: 1rem;
   color: white;
   display: none;
+}
+
+@media screen and (max-device-width: 720px) {
+
+  .view-poll-main-div {
+    width: 100%;
+    display: block;
+  }
+
+  .view-poll-left-div {
+    display: none;
+  }
+
+  .view-poll-left-div-mobile {
+    display: block;
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 3rem;
+  }
+
+  .view-poll-center-div {
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 1rem;
+  }
+
+  .btn-vote {
+    width: 100%;
+  }
 }
