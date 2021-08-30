@@ -20,6 +20,8 @@ export class PollOption {
 
   haveMeVoted: boolean;
 
+  usersVoted: string[];
+
   constructor(id, value, votes, haveMeVoted) {
     this.id = id;
     this.value = value;

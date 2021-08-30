@@ -50,7 +50,7 @@
 
     <div *ngFor="let poll of polls" id="poll-div-{{poll.id}}" style="background-color: white; margin-left: 1rem; margin-right: 1rem;
          margin-top: 1rem; border-radius: 5px; padding: 1rem;" [ngClass]="poll.requiredForFilling === true ? 'required-border' : ''">
-      <h6>{{poll.title}}</h6>
+      <a href="viewPoll/{{poll.id}}" style="color: #707070; font-weight: bold;">{{poll.title}}</a>
 
       <p *ngIf="poll.description" id="poll-desc-{{poll.id}}" class="text-with-three-dots three-lines-text" style="margin-top: 1rem; margin-bottom: 0;">{{poll.description}}</p>
 

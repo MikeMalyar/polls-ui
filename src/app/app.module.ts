@@ -11,6 +11,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { CreatePollComponent } from './create-poll/create-poll.component';
 import { HeaderComponent } from './header/header.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { ViewPollComponent } from './view-poll/view-poll.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MainPageComponent } from './main-page/main-page.component';
     RegistrationComponent,
     CreatePollComponent,
     HeaderComponent,
-    MainPageComponent
+    MainPageComponent,
+    ViewPollComponent
   ],
   imports: [
     BrowserModule,
