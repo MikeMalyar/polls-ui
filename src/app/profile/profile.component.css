@@ -1,0 +1,64 @@
+.text-with-three-dots {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.three-lines-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.profile-main-div {
+  width: 60rem;
+  margin: auto;
+  display: flex;
+  padding-top: 3rem;
+}
+
+.profile-left-div {
+  width: 20%;
+}
+
+.profile-center-div {
+  width: 80%;
+  background-color: #f9f9f9;
+  margin-left: 0.5rem;
+  border-color: darkgrey;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  margin-bottom: 3rem;
+  padding: 1rem;
+}
+
+.save-profile-btn {
+  min-height: 3rem;
+  width: 50%;
+  background-color: #707070;
+  color: white;
+  margin-top: 3rem;
+}
+
+@media screen and (max-device-width: 720px) {
+
+  .profile-main-div {
+    width: 100%;
+    display: block;
+  }
+
+  .profile-left-div {
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  .profile-center-div {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 1rem;
+  }
+
+  .save-profile-btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,84 @@
+<app-header></app-header>
+
+<div class="profile-main-div">
+
+  <div class="profile-left-div">
+    <div style="border-color: darkgrey; border-width: 1px; border-style: solid; border-radius: 5px; text-align: center;
+                background-color: #f9f9f9;">
+      <p style="margin-top: 1rem;">{{profile.fullName}}</p>
+    </div>
+
+    <div style="border-color: darkgrey; border-width: 1px; border-style: solid; border-radius: 5px; padding: 0.5rem;
+                margin-top: 0.5rem; background-color: #f9f9f9;">
+      <p>Ваші опитування:</p>
+
+      <p *ngIf="myPolls.length === 0" style="margin-top: 1rem; color: #707070; text-align: center;">Наразі немає :(</p>
+
+      <div *ngFor="let myPoll of myPolls" style="display: flex; margin-bottom: 0.5rem;">
+        <i class="bi bi-stickies"></i>
+
+        <a href="/viewPoll/{{myPoll.id}}" style="margin-left: 0.5rem; width: 70%; text-overflow: ellipsis;
+            white-space: nowrap; overflow: hidden; color: #707070;">{{myPoll.title}}</a>
+
+        <i style="width: 15%; text-align: right;">{{myPoll.reacted}}</i>
+      </div>
+
+      <div style="text-align: center; margin-top: 1rem;">
+        <a *ngIf="myPolls.length > 0" href="/viewPolls/my" style="color: #707070;">Переглянути всі</a>
+      </div>
+    </div>
+
+    <div style="border-color: darkgrey; border-width: 1px; border-style: solid; border-radius: 5px; padding: 0.5rem;
+                margin-top: 0.5rem; background-color: #f9f9f9;">
+      <p>Групи:</p>
+
+      <p *ngIf="myGroups.length === 0" style="margin-top: 1rem; color: #707070; text-align: center;">Наразі немає :(</p>
+
+      <div *ngFor="let myGroup of myGroups" style="display: flex; margin-bottom: 0.5rem;">
+        <i class="bi bi-people"></i>
+
+        <a href="/viewGroup/{{myGroup.id}}" class="text-with-three-dots" style="margin-left: 0.5rem; width: 70%; color: #707070;">{{myGroup.name}}</a>
+
+        <i style="width: 15%; text-align: right;">{{myGroup.newContent}}</i>
+      </div>
+    </div>
+  </div>
+
+  <div class="profile-center-div">
+    <h4>Профіль</h4>
+
+    <form #profileForm="ngForm">
+      <div class="form-group" style="margin-top: 3rem;">
+        <input type="text" class="input font-profile form-control" id="fullNameInput" name="fullNameInput" required=""
+               placeholder="Повне ім'я" style="min-height: 3rem;" [(ngModel)]="profile.fullName" #fullNameInput="ngModel">
+
+        <div *ngIf="fullNameInput.errors && (fullNameInput.dirty || fullNameInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+          <div [hidden]="!fullNameInput.errors.required" class="label">Вкажіть повне ім'я</div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top: 1rem;">
+        <input type="text" class="input font-profile form-control" id="emailInput" name="emailInput" required=""
+               placeholder="Електронна пошта" style="min-height: 3rem;" [(ngModel)]="profile.email" #emailInput="ngModel">
+
+        <div *ngIf="emailInput.errors && (emailInput.dirty || emailInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+          <div [hidden]="!emailInput.errors.required" class="label">Вкажіть електронну пошту</div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top: 1rem;">
+        <input type="text" class="input font-profile form-control" id="loginInput" name="loginInput"
+               placeholder="Логін" [(ngModel)]="profile.login" #loginInput="ngModel"
+               style="min-height: 3rem;" required>
+
+        <div *ngIf="loginInput.errors && (loginInput.dirty || loginInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+          <div [hidden]="!loginInput.errors.required" class="label">Вкажіть логін</div>
+        </div>
+      </div>
+    </form>
+
+    <button type="button" class="btn save-profile-btn"
+            [disabled]="!profileForm.valid">Оновити профіль
+    </button>
+  </div>
+</div>
