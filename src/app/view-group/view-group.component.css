@@ -1,0 +1,93 @@
+.group-main-div {
+  width: 60rem;
+  margin: auto;
+  display: flex;
+  padding-top: 3rem;
+}
+
+.group-left-div {
+  width: 20%;
+}
+
+.group-center-div {
+  width: 80%;
+  background-color: #f9f9f9;
+  margin-left: 0.5rem;
+  border-color: darkgrey;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 5px;
+  margin-bottom: 3rem;
+  padding: 1rem;
+}
+
+.save-group-btn {
+  min-height: 3rem;
+  width: 50%;
+  background-color: #707070;
+  color: white;
+  margin-top: 3rem;
+}
+
+.text-with-three-dots {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.three-lines-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #707070;
+  border-color: #707070;
+}
+
+.btn-check:checked + .btn-outline-secondary, .btn-check:active + .btn-outline-secondary, .btn-outline-secondary:active, .btn-outline-secondary.active, .btn-outline-secondary.dropdown-toggle.show {
+  background-color: darkgray;
+  border-color: #707070;
+}
+
+.required-border {
+  border-radius: 5px;
+  border-style: solid;
+  border-color: red;
+}
+
+.btn-vote {
+  min-height: 2rem;
+  width: 50%;
+  background-color: #707070;
+  margin-top: 1rem;
+  color: white;
+  display: none;
+}
+
+@media screen and (max-device-width: 720px) {
+
+  .group-main-div {
+    width: 100%;
+    display: block;
+  }
+
+  .group-left-div {
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  .group-center-div {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 1rem;
+  }
+
+  .save-group-btn {
+    width: 100%;
+  }
+
+  .btn-vote {
+    width: 100%;
+  }
+}

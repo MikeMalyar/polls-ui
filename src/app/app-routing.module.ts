@@ -6,6 +6,8 @@ import {CreatePollComponent} from './create-poll/create-poll.component';
 import {MainPageComponent} from './main-page/main-page.component';
 import {ViewPollComponent} from './view-poll/view-poll.component';
 import {ProfileComponent} from './profile/profile.component';
+import {ViewGroupComponent} from './view-group/view-group.component';
+import {CreateGroupComponent} from './create-group/create-group.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -14,6 +16,9 @@ const routes: Routes = [
   {path: 'editPoll/:pollId', component: CreatePollComponent},
   {path: 'viewPoll/:pollId', component: ViewPollComponent},
   {path: 'profile', component: ProfileComponent},
+  {path: 'viewGroup/:groupId', component: ViewGroupComponent},
+  {path: 'createGroup', component: CreateGroupComponent},
+  {path: 'editGroup/:pollId', component: CreateGroupComponent},
   {path: '', component: MainPageComponent}
 ];
 

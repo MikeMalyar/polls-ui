@@ -1,0 +1,46 @@
+<app-header></app-header>
+
+<div class="group-main-div">
+
+  <div class="group-left-div">
+    <div style="border-color: darkgrey; border-width: 1px; border-style: solid; border-radius: 5px; text-align: center;
+                background-color: #f9f9f9;">
+      <p style="margin-top: 1rem;">{{group.title}}</p>
+    </div>
+
+    <div style="border-color: darkgrey; border-width: 1px; border-style: solid; border-radius: 5px; padding: 0.5rem;
+                margin-top: 0.5rem; background-color: #f9f9f9;">
+      <h6>Учасники:</h6>
+
+      <p *ngFor="let member of group.memberNames">{{member}}</p>
+    </div>
+  </div>
+
+  <div class="group-center-div">
+    <h4>Группа</h4>
+
+    <form #groupForm="ngForm">
+      <div class="form-group" style="margin-top: 3rem;">
+        <input type="text" class="input font-profile form-control" id="titleInput" name="titleInput" required
+               placeholder="Назва" style="min-height: 3rem;" [(ngModel)]="group.title" #titleInput="ngModel">
+
+        <div *ngIf="titleInput.errors && (titleInput.dirty || titleInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+          <div [hidden]="!titleInput.errors.required" class="label">Вкажіть назву</div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top: 1rem;">
+        <textarea class="input font-profile form-control" id="descriptionInput" name="descriptionInput" required
+                  placeholder="Опис" style="min-height: 3rem;" [(ngModel)]="group.description" #descriptionInput="ngModel"></textarea>
+
+        <div *ngIf="descriptionInput.errors && (descriptionInput.dirty || descriptionInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+          <div [hidden]="!descriptionInput.errors.required" class="label">Вкажіть опис</div>
+        </div>
+      </div>
+    </form>
+
+    <button type="button" class="btn save-group-btn"
+            [disabled]="!groupForm.valid">Оновити дані групи
+    </button>
+  </div>
+</div>

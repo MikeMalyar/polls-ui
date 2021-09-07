@@ -13,6 +13,8 @@ import { HeaderComponent } from './header/header.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { ViewPollComponent } from './view-poll/view-poll.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ViewGroupComponent } from './view-group/view-group.component';
+import { CreateGroupComponent } from './create-group/create-group.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { ProfileComponent } from './profile/profile.component';
     HeaderComponent,
     MainPageComponent,
     ViewPollComponent,
-    ProfileComponent
+    ProfileComponent,
+    ViewGroupComponent,
+    CreateGroupComponent
   ],
   imports: [
     BrowserModule,
