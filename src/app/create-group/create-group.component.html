@@ -9,7 +9,7 @@
     </div>
 
     <div style="border-color: darkgrey; border-width: 1px; border-style: solid; border-radius: 5px; padding: 0.5rem;
-                margin-top: 0.5rem; background-color: #f9f9f9;">
+                margin-top: 0.5rem; background-color: #f9f9f9; text-align: center;">
       <h6>Учасники:</h6>
 
       <p *ngFor="let member of group.memberNames">{{member}}</p>
@@ -17,7 +17,12 @@
   </div>
 
   <div class="group-center-div">
-    <h4>Группа</h4>
+    <div style="display: flex;">
+      <h4>Группа</h4>
+      <div *ngIf="group.id" style="text-align: right; width: 100%;">
+        <a href="viewGroup/{{group.id}}" class="bi bi-eye-fill" style="margin: auto; font-size: 1.5rem; color: #707070;"></a>
+      </div>
+    </div>
 
     <form #groupForm="ngForm">
       <div class="form-group" style="margin-top: 3rem;">
@@ -39,8 +44,12 @@
       </div>
     </form>
 
-    <button type="button" class="btn save-group-btn"
+    <button type="button" class="btn save-group-btn" *ngIf="group.id"
             [disabled]="!groupForm.valid">Оновити дані групи
+    </button>
+
+    <button type="button" class="btn save-group-btn" *ngIf="!group.id"
+            [disabled]="!groupForm.valid">Створити групу
     </button>
   </div>
 </div>
