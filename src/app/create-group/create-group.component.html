@@ -12,7 +12,22 @@
                 margin-top: 0.5rem; background-color: #f9f9f9; text-align: center;">
       <h6>Учасники:</h6>
 
-      <p *ngFor="let member of group.memberNames">{{member}}</p>
+      <div *ngFor="let memberName of group.memberNames; index as i;" id="addedMembers-{{i}}"
+           style="width: 100%; display: flex; margin-top: 0.5rem;">
+        <input type="text" class="input form-control" id="addedMember-{{i}}" name="addedMember-{{i}}"
+               autocomplete="off" value="{{memberName}}" disabled>
+
+        <button class="btn" style="color: #f3f3f3; background-color: #707070; height: 100%;"
+                [disabled]="memberName === username" (click)="removeMemberNameOption(i);">&nbsp;x&nbsp;</button>
+      </div>
+
+      <h6 style="margin-top: 1rem;">Додати:</h6>
+
+      <input id="memberNameInput" name="memberNameInput" class="form-control" list="availableUserNamesList" autocomplete="off"
+             placeholder="Вкажіть користувача" [(ngModel)]="memberNameInputValue" (input)="addMemberNameOption();">
+      <datalist id="availableUserNamesList">
+        <option *ngFor="let username of availableUserNames">{{username}}</option>
+      </datalist>
     </div>
   </div>
 
