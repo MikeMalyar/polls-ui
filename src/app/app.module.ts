@@ -15,6 +15,7 @@ import { ViewPollComponent } from './view-poll/view-poll.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ViewGroupComponent } from './view-group/view-group.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { CreateGroupComponent } from './create-group/create-group.component';
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -26,14 +26,14 @@
     <div class="tab-pane fade show active" id="registerContainer" role="tabpanel"
          aria-labelledby="register-tab">
       <div class="alert alert-danger" role="alert" id="errorMessage"
-           style="display: none; margin-top: 2rem;">
+           style="margin-top: 2rem;" [ngStyle]="{'display': errorMessage ? '' : 'none'}">{{errorMessage}}
       </div>
 
       <form #loginForm="ngForm">
         <div class="form-group" style="margin-top: 3rem;">
           <input type="text" class="input font-registration form-control" id="loginInput" name="loginInput"
                  placeholder="Логін / електронна пошта" [(ngModel)]="userLoginDto.login" #loginInput="ngModel"
-                 style="min-height: 3rem;" required>
+                 style="min-height: 3rem;" required (change)="hideError();">
 
           <div *ngIf="loginInput.errors && (loginInput.dirty || loginInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
             <div [hidden]="!loginInput.errors.required" class="label">Вкажіть логін / електронну пошту</div>
@@ -43,7 +43,7 @@
         <div class="form-group" style="margin-top: 1rem;">
           <input type="password" class="input font-registration form-control" id="passInput" name="passInput"
                  placeholder="Пароль" [(ngModel)]="userLoginDto.password" #passInput="ngModel"
-                 style="min-height: 3rem;" required>
+                 style="min-height: 3rem;" required (change)="hideError();">
 
           <div *ngIf="passInput.errors && (passInput.dirty || passInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
             <div [hidden]="!passInput.errors.required" class="label">Введіть пароль</div>
@@ -53,7 +53,7 @@
 
       <button type="button" class="btn"
               style="min-height: 3rem; width: 50%; background-color: #707070; color: white; margin-top: 3rem;"
-              [disabled]="!loginForm.valid">Увійти
+              [disabled]="!loginForm.valid" (click)="login();">Увійти
       </button>
 
       <a href="registration" class="registration-link">Зареєструватися</a>
