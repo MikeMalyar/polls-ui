@@ -16,6 +16,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ViewGroupComponent } from './view-group/view-group.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import {HttpClientModule} from '@angular/common/http';
+import { FourOFourComponent } from './four-o-four/four-o-four.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {HttpClientModule} from '@angular/common/http';
     ViewPollComponent,
     ProfileComponent,
     ViewGroupComponent,
-    CreateGroupComponent
+    CreateGroupComponent,
+    FourOFourComponent
   ],
   imports: [
     BrowserModule,

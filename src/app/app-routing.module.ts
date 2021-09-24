@@ -8,6 +8,7 @@ import {ViewPollComponent} from './view-poll/view-poll.component';
 import {ProfileComponent} from './profile/profile.component';
 import {ViewGroupComponent} from './view-group/view-group.component';
 import {CreateGroupComponent} from './create-group/create-group.component';
+import {FourOFourComponent} from './four-o-four/four-o-four.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -20,7 +21,7 @@ const routes: Routes = [
   {path: 'createGroup', component: CreateGroupComponent},
   {path: 'editGroup/:pollId', component: CreateGroupComponent},
   {path: '', component: MainPageComponent},
-  {path: '**', component: MainPageComponent}
+  {path: '**', component: FourOFourComponent}
 ];
 
 @NgModule({
