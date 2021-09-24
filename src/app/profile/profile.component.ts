@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {MyGroupDto, MyPollDto} from '../models/dto';
 import {Profile} from '../models/profile';
+import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {GenericResponse} from '../models/rest';
+import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
 
 @Component({
   selector: 'app-profile',
@@ -12,9 +16,9 @@ export class ProfileComponent implements OnInit {
   myPolls: MyPollDto[] = [];
   myGroups: MyGroupDto[] = [];
 
-  profile: Profile;
+  profile: Profile = new Profile();
 
-  constructor() {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   ngOnInit() {
@@ -25,10 +29,13 @@ export class ProfileComponent implements OnInit {
     this.myGroups.push(new MyGroupDto(1, '602', 10),
       new MyGroupDto(2, '607', 4));   // take from DB
 
-    this.profile = new Profile();   // take from DB
-    this.profile.email = 'test@gmail.com';
-    this.profile.fullName = 'Mykhailo Maliarchuk';
-    this.profile.login = 'mmaliar';
+    this.http.get<GenericResponse>(SERVER_URL + '/user/profile', HTTP_OPTIONS).toPromise()
+      .then(data => this.profile = data.result)
+      .catch(error => {
+        if (error.status === 401) {
+          this.router.navigate(['/login', {originUrl: '/profile'}]);
+        }
+      });
   }
 
 }
