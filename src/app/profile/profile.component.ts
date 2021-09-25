@@ -38,4 +38,13 @@ export class ProfileComponent implements OnInit {
       });
   }
 
+  updateProfile() {
+    this.http.put<GenericResponse>(SERVER_URL + '/user/profile', this.profile, HTTP_OPTIONS).toPromise()
+      .then(_ => window.location.reload())
+      .catch(error => {
+        if (error.status === 401) {
+          this.router.navigate(['/login', {originUrl: '/profile'}]);
+        }
+      });
+  }
 }

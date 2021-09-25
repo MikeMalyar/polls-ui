@@ -5,7 +5,8 @@
   <div class="main-page-left-div">
     <div style="border-color: darkgrey; border-width: 1px; border-style: solid; border-radius: 5px; text-align: center;
                 background-color: #f9f9f9;">
-      <p style="margin-top: 1rem;">{{userName}}</p>
+      <p *ngIf="userName" style="margin-top: 1rem;">{{userName}}</p>
+      <p *ngIf="!userName" style="margin-top: 1rem;">Гість</p>
     </div>
 
     <div style="border-color: darkgrey; border-width: 1px; border-style: solid; border-radius: 5px; padding: 0.5rem;

@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {MyGroupDto, MyPollDto} from '../models/dto';
 import {Poll, PollOption} from '../models/poll';
+import {HttpClient} from '@angular/common/http';
+import {GenericResponse} from '../models/rest';
+import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
 
 @Component({
   selector: 'app-main-page',
@@ -15,11 +18,12 @@ export class MainPageComponent implements OnInit {
 
   polls: Poll[] = [];
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   ngOnInit() {
-    this.userName = 'Mykhailo Maliarchuk'; // take from DB
+    this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserFullName', HTTP_OPTIONS).toPromise()
+      .then(data => this.userName = data.result);
 
     this.myPolls.push(new MyPollDto(1, 'Тестове опитування 1', 3),
       new MyPollDto(2, 'Тестове опитування номер 2', 20));   // take from DB

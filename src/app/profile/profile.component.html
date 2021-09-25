@@ -78,7 +78,7 @@
     </form>
 
     <button type="button" class="btn save-profile-btn"
-            [disabled]="!profileForm.valid">Оновити профіль
+            [disabled]="!profileForm.valid" (click)="updateProfile();">Оновити профіль
     </button>
   </div>
 </div>

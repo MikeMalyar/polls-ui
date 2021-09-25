@@ -14,7 +14,8 @@
         </li>
       </ul>
       <form class="d-flex">
-        <a class="btn btn-outline-light" type="submit" href="login">Увійти</a>
+        <a *ngIf="!userName" class="btn btn-outline-light" type="submit" href="login">Увійти</a>
+        <a *ngIf="userName" class="btn btn-outline-light" type="submit" (click)="logout();">Вийти</a>
       </form>
     </div>
   </div>
