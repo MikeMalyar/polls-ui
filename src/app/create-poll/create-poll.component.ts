@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Poll, PollOption} from '../models/poll';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {GenericResponse} from '../models/rest';
+import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-create-poll',
@@ -21,10 +24,17 @@ export class CreatePollComponent implements OnInit {
   currentDate = new Date();
   currentDateString = '';
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
   }
 
   ngOnInit() {
+    this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserFullName', HTTP_OPTIONS).toPromise()
+      .then(data => {
+        if (!data.result) {
+          this.router.navigate(['/login', {originUrl: '/createPoll'}]);
+        }
+      });
+
     this.poll.options = [];
     this.poll.options.push(new PollOption(null, 'Опція 1', 0, false),
       new PollOption(null, 'Опція 2', 0, false));   // take from DB
@@ -90,6 +100,20 @@ export class CreatePollComponent implements OnInit {
     if (this.chosenGroupNames.length === 0) {
       this.poll.requiredForFilling = false;
     }
+  }
+
+  createPoll() {
+    this.http.post<GenericResponse>(SERVER_URL + '/poll/create', this.poll, HTTP_OPTIONS).toPromise()
+      .then(data => {
+        if (data.success) {
+          this.router.navigate(['/viewPoll/' + data.result.id]);
+        }
+      })
+      .catch(error => {
+        if (error.status === 401) {
+          this.router.navigate(['/login', {originUrl: '/createPoll'}]);
+        }
+      });
   }
 }
 

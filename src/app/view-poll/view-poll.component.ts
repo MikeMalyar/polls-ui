@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Poll, PollOption} from '../models/poll';
+import {GenericResponse} from '../models/rest';
+import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
+import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-view-poll',
@@ -10,29 +14,26 @@ export class ViewPollComponent implements OnInit {
 
   DISPLAY_VOTES_COUNT = 3;
 
-  poll: Poll;
+  poll: Poll = new Poll();
 
   displayVotesCount = [];
   descriptionFullDisplayed = false;
 
-  constructor() {
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
 
-    this.poll = new Poll(); // take from DB
-    this.poll.id = 1;
-    this.poll.title = 'Тестове опитування 1';
-    this.poll.description = 'Опис цього опитування призначений для перевірки його відображення у веб браузері.'.repeat(15);
-    this.poll.options = [new PollOption(1, 'Опція 1', 8, false),
-      new PollOption(2, 'Опція 2', 5, false),
-      new PollOption(3, 'Опція 3', 7, false)];
-    this.poll.requiredForFilling = true;
-    this.poll.anonymousForReacted = true;
+    this.poll.options = [];
 
-    this.poll.options.forEach(_ => {
-      this.displayVotesCount.push(this.DISPLAY_VOTES_COUNT);
-    });
+    this.http.get<GenericResponse>(SERVER_URL + '/poll/' + this.route.snapshot.paramMap.get('pollId'), HTTP_OPTIONS).toPromise()
+      .then(data => {
+        this.poll = data.result;
+
+        this.poll.options.forEach(_ => {
+          this.displayVotesCount.push(this.DISPLAY_VOTES_COUNT);
+        });
+      });
   }
 
   disableTextOverflow(id) {
