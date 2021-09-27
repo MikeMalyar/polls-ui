@@ -28,19 +28,32 @@ export class CreatePollComponent implements OnInit {
   }
 
   ngOnInit() {
+    const pollId = this.route.snapshot.paramMap.get('pollId');
+
     this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserFullName', HTTP_OPTIONS).toPromise()
       .then(data => {
         if (!data.result) {
-          this.router.navigate(['/login', {originUrl: '/createPoll'}]);
+          const url = pollId ? '/editPoll/' + pollId : '/createPoll';
+          this.router.navigate(['/login', {originUrl: url}]);
         }
       });
 
-    this.poll.options = [];
-    this.poll.options.push(new PollOption(null, 'Опція 1', 0, false),
-      new PollOption(null, 'Опція 2', 0, false));   // take from DB
-    this.poll.id = Number(this.route.snapshot.paramMap.get('pollId'));
-
-    this.pollOptionsCount = this.poll.options.length;
+    if (pollId) {
+      this.http.get<GenericResponse>(SERVER_URL + '/poll/' + this.route.snapshot.paramMap.get('pollId'), HTTP_OPTIONS).toPromise()
+        .then(data => {
+          if (data.result) {
+            this.poll = data.result;
+            this.pollOptionsCount = this.poll.options.length;
+          } else {
+            this.router.navigate(['**']);
+          }
+        });
+    } else {
+      this.poll.options = [];
+      this.poll.options.push(new PollOption(null, 'Опція 1', 0, false),
+        new PollOption(null, 'Опція 2', 0, false));
+      this.pollOptionsCount = this.poll.options.length;
+    }
 
     this.groupNames = ['group 1', 'group 2', 'group 3', 'group 4', 'group 5']; // take from DB
     this.groupNames.sort();
@@ -104,6 +117,20 @@ export class CreatePollComponent implements OnInit {
 
   createPoll() {
     this.http.post<GenericResponse>(SERVER_URL + '/poll/create', this.poll, HTTP_OPTIONS).toPromise()
+      .then(data => {
+        if (data.success) {
+          this.router.navigate(['/viewPoll/' + data.result.id]);
+        }
+      })
+      .catch(error => {
+        if (error.status === 401) {
+          this.router.navigate(['/login', {originUrl: '/createPoll'}]);
+        }
+      });
+  }
+
+  updatePoll() {
+    this.http.put<GenericResponse>(SERVER_URL + '/poll/update', this.poll, HTTP_OPTIONS).toPromise()
       .then(data => {
         if (data.success) {
           this.router.navigate(['/viewPoll/' + data.result.id]);

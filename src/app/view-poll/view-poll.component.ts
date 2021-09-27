@@ -3,7 +3,7 @@ import {Poll, PollOption} from '../models/poll';
 import {GenericResponse} from '../models/rest';
 import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
 import {HttpClient} from '@angular/common/http';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-view-poll',
@@ -19,7 +19,7 @@ export class ViewPollComponent implements OnInit {
   displayVotesCount = [];
   descriptionFullDisplayed = false;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
@@ -28,11 +28,15 @@ export class ViewPollComponent implements OnInit {
 
     this.http.get<GenericResponse>(SERVER_URL + '/poll/' + this.route.snapshot.paramMap.get('pollId'), HTTP_OPTIONS).toPromise()
       .then(data => {
-        this.poll = data.result;
+        if (data.result) {
+          this.poll = data.result;
 
-        this.poll.options.forEach(_ => {
-          this.displayVotesCount.push(this.DISPLAY_VOTES_COUNT);
-        });
+          this.poll.options.forEach(_ => {
+            this.displayVotesCount.push(this.DISPLAY_VOTES_COUNT);
+          });
+        } else {
+          this.router.navigate(['**']);
+        }
       });
   }
 

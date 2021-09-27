@@ -23,7 +23,12 @@
   <div class="view-poll-center-div">
 
     <div style="background-color: white; margin: 1rem; border-radius: 5px; padding: 1rem;" [ngClass]="poll.requiredForFilling === true ? 'required-border' : ''">
-      <h6>{{poll.title}}</h6>
+      <div style="display: flex;">
+        <h4 style="width: 100%;">{{poll.title}}</h4>
+        <div style="text-align: right; width: 100%;">
+          <a href="editPoll/{{poll.id}}" class="bi bi-pencil-square" style="margin: auto; font-size: 1.5rem; color: #707070;"></a>
+        </div>
+      </div>
 
       <h6 *ngIf="poll.requiredForFilling === true && !poll.haveMeVoted" style="margin-top: 1rem; color: red;">Це опитування обов'язкове для заповнення</h6>
 

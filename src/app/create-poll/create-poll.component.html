@@ -94,7 +94,8 @@
 
       <button *ngIf="!poll.id" [disabled]="!createPollForm.form.valid" type="button" class="btn create-btn"
               style="margin-top: 1.5rem;" (click)="createPoll();">Створити опитування</button>
-      <button *ngIf="poll.id" [disabled]="!createPollForm.form.valid" type="button" class="btn create-btn" style="margin-top: 1.5rem;">Редагувати опитування</button>
+      <button *ngIf="poll.id" [disabled]="!createPollForm.form.valid" type="button" class="btn create-btn"
+              style="margin-top: 1.5rem;" (click)="updatePoll();">Редагувати опитування</button>
     </form>
 
   </div>
