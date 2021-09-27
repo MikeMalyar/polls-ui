@@ -26,7 +26,7 @@ export class ViewPollComponent implements OnInit {
 
     this.poll.options = [];
 
-    this.http.get<GenericResponse>(SERVER_URL + '/poll/' + this.route.snapshot.paramMap.get('pollId'), HTTP_OPTIONS).toPromise()
+    this.http.get<GenericResponse>(SERVER_URL + '/poll/get/' + this.route.snapshot.paramMap.get('pollId'), HTTP_OPTIONS).toPromise()
       .then(data => {
         if (data.result) {
           this.poll = data.result;
@@ -57,23 +57,32 @@ export class ViewPollComponent implements OnInit {
   }
 
   vote(pollId) {
-    const options = document.getElementsByName('poll-' + pollId + '-option');
-    let optionId = 0;
-    options.forEach(o => {
-      // @ts-ignore
-      if (o.checked === true) {
-        // @ts-ignore
-        optionId = o.value;
-      }
-    });
-    const option = this.poll.options.find(o => Number(Number(o.id) === Number(optionId)));
 
-    this.poll.haveMeVoted = true;
-    option.haveMeVoted = true;
+    this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserFullName', HTTP_OPTIONS).toPromise()
+      .then(data => {
+        if (data.result) {
+          const options = document.getElementsByName('poll-' + pollId + '-option');
+          let optionId = 0;
+          options.forEach(o => {
+            // @ts-ignore
+            if (o.checked === true) {
+              // @ts-ignore
+              optionId = o.value;
+            }
+          });
+          const option = this.poll.options.find(o => Number(Number(o.id) === Number(optionId)));
 
-    option.votes++;
+          this.poll.haveMeVoted = true;
+          option.haveMeVoted = true;
 
-    this.addAnonymousInformation();
+          option.votes++;
+          option.usersVoted.push(data.result);
+
+          this.http.get<GenericResponse>(SERVER_URL + '/poll/vote/' + option.id, HTTP_OPTIONS).subscribe();
+        } else {
+          this.router.navigate(['/login', {originUrl: '/viewPoll/' + pollId}]);
+        }
+      });
   }
 
   calculateOptionPercentage(pollId, optionId) {
@@ -83,12 +92,6 @@ export class ViewPollComponent implements OnInit {
     this.poll.options.map(o => o.votes).forEach(v => sum += v);
 
     return Math.round(Number(option.votes) / sum * 100);
-  }
-
-  addAnonymousInformation() {
-    this.poll.options.forEach(option => {
-      option.usersVoted = ['Mykhailo Maliarchuk', 'Test User 1', 'Test User 2', 'Test User 3', 'Test User 4'];  // take from DB
-    });
   }
 
   displayAllVotes(optionIndex) {

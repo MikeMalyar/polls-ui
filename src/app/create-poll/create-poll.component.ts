@@ -39,7 +39,7 @@ export class CreatePollComponent implements OnInit {
       });
 
     if (pollId) {
-      this.http.get<GenericResponse>(SERVER_URL + '/poll/' + this.route.snapshot.paramMap.get('pollId'), HTTP_OPTIONS).toPromise()
+      this.http.get<GenericResponse>(SERVER_URL + '/poll/get/' + this.route.snapshot.paramMap.get('pollId'), HTTP_OPTIONS).toPromise()
         .then(data => {
           if (data.result) {
             this.poll = data.result;
