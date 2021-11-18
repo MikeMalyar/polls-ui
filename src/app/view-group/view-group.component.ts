@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Group} from '../models/group';
 import {Poll, PollOption} from '../models/poll';
+import {GenericResponse} from '../models/rest';
+import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
+import {HttpClient} from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-view-group',
@@ -13,15 +17,18 @@ export class ViewGroupComponent implements OnInit {
 
   polls: Poll[] = [];
 
-  constructor() { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
 
-    this.group = new Group();   // take from DB
-    this.group.id = 1;
-    this.group.title = '607';
-    this.group.description = 'Тестова группа №607. Опис призначений для перевірки його відображення у веб браузері.'.repeat(3);
-    this.group.memberNames = ['Mykhailo Maliarchuk', 'Oleksandr Chornous', 'Andriy Buchynskiy'];
+    this.http.get<GenericResponse>(SERVER_URL + '/group/get/' + this.route.snapshot.paramMap.get('groupId'), HTTP_OPTIONS).toPromise()
+      .then(data => {
+        if (data.result) {
+          this.group = data.result;
+        } else {
+          this.router.navigate(['**']);
+        }
+      });
 
     const poll1 = new Poll();
     // @ts-ignore
@@ -57,22 +64,32 @@ export class ViewGroupComponent implements OnInit {
   }
 
   vote(pollId) {
-    const options = document.getElementsByName('poll-' + pollId + '-option');
-    let optionId = 0;
-    options.forEach(o => {
-      // @ts-ignore
-      if (o.checked === true) {
-        // @ts-ignore
-        optionId = o.value;
-      }
-    });
-    const poll = this.polls.find(p => p.id === pollId);
-    const option = poll.options.find(o => Number(Number(o.id) === Number(optionId)));
+    this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserFullName', HTTP_OPTIONS).toPromise()
+      .then(data => {
+        if (data.result) {
+          const options = document.getElementsByName('poll-' + pollId + '-option');
+          let optionId = 0;
+          options.forEach(o => {
+            // @ts-ignore
+            if (o.checked === true) {
+              // @ts-ignore
+              optionId = o.value;
+            }
+          });
+          const poll = this.polls.find(p => p.id === pollId);
+          const option = poll.options.find(o => Number(Number(o.id) === Number(optionId)));
 
-    poll.haveMeVoted = true;
-    option.haveMeVoted = true;
+          poll.haveMeVoted = true;
+          option.haveMeVoted = true;
 
-    option.votes++;
+          option.votes++;
+          option.usersVoted.push(data.result);
+
+          this.http.get<GenericResponse>(SERVER_URL + '/poll/vote/' + option.id, HTTP_OPTIONS).subscribe();
+        } else {
+          this.router.navigate(['/login', {originUrl: '/viewPoll/' + pollId}]);
+        }
+      });
   }
 
   calculateOptionPercentage(pollId, optionId) {

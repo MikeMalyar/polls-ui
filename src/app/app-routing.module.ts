@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent},
   {path: 'viewGroup/:groupId', component: ViewGroupComponent},
   {path: 'createGroup', component: CreateGroupComponent},
-  {path: 'editGroup/:pollId', component: CreateGroupComponent},
+  {path: 'editGroup/:groupId', component: CreateGroupComponent},
   {path: '', component: MainPageComponent},
   {path: '**', component: FourOFourComponent}
 ];

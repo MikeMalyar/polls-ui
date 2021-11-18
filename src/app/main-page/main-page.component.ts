@@ -4,6 +4,7 @@ import {Poll, PollOption} from '../models/poll';
 import {HttpClient} from '@angular/common/http';
 import {GenericResponse} from '../models/rest';
 import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -18,7 +19,7 @@ export class MainPageComponent implements OnInit {
 
   polls: Poll[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   ngOnInit() {
@@ -65,22 +66,32 @@ export class MainPageComponent implements OnInit {
   }
 
   vote(pollId) {
-    const options = document.getElementsByName('poll-' + pollId + '-option');
-    let optionId = 0;
-    options.forEach(o => {
-      // @ts-ignore
-      if (o.checked === true) {
-        // @ts-ignore
-        optionId = o.value;
-      }
-    });
-    const poll = this.polls.find(p => p.id === pollId);
-    const option = poll.options.find(o => Number(Number(o.id) === Number(optionId)));
+    this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserFullName', HTTP_OPTIONS).toPromise()
+      .then(data => {
+        if (data.result) {
+          const options = document.getElementsByName('poll-' + pollId + '-option');
+          let optionId = 0;
+          options.forEach(o => {
+            // @ts-ignore
+            if (o.checked === true) {
+              // @ts-ignore
+              optionId = o.value;
+            }
+          });
+          const poll = this.polls.find(p => p.id === pollId);
+          const option = poll.options.find(o => Number(Number(o.id) === Number(optionId)));
 
-    poll.haveMeVoted = true;
-    option.haveMeVoted = true;
+          poll.haveMeVoted = true;
+          option.haveMeVoted = true;
 
-    option.votes++;
+          option.votes++;
+          option.usersVoted.push(data.result);
+
+          this.http.get<GenericResponse>(SERVER_URL + '/poll/vote/' + option.id, HTTP_OPTIONS).subscribe();
+        } else {
+          this.router.navigate(['/login', {originUrl: '/viewPoll/' + pollId}]);
+        }
+      });
   }
 
   calculateOptionPercentage(pollId, optionId) {

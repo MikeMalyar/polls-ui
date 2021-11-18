@@ -60,11 +60,11 @@
     </form>
 
     <button type="button" class="btn save-group-btn" *ngIf="group.id"
-            [disabled]="!groupForm.valid">Оновити дані групи
+            [disabled]="!groupForm.valid" (click)="updateGroup();">Оновити дані групи
     </button>
 
     <button type="button" class="btn save-group-btn" *ngIf="!group.id"
-            [disabled]="!groupForm.valid">Створити групу
+            [disabled]="!groupForm.valid" (click)="createGroup();">Створити групу
     </button>
   </div>
 </div>
