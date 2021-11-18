@@ -11,6 +11,8 @@ export class Poll {
   options: PollOption[];
 
   haveMeVoted: boolean;
+
+  groupNames: string[];
 }
 
 export class PollOption {

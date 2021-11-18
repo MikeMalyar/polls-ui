@@ -16,7 +16,7 @@ export class CreatePollComponent implements OnInit {
 
   pollOptionsCount: number;
 
-  groupNames: string[];
+  groupNames: string[] = [];
   chosenGroupNames: string[];
 
   groupNameInputValue = '';
@@ -29,6 +29,7 @@ export class CreatePollComponent implements OnInit {
 
   ngOnInit() {
     const pollId = this.route.snapshot.paramMap.get('pollId');
+    this.chosenGroupNames = [];
 
     this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserFullName', HTTP_OPTIONS).toPromise()
       .then(data => {
@@ -44,6 +45,8 @@ export class CreatePollComponent implements OnInit {
           if (data.result) {
             this.poll = data.result;
             this.pollOptionsCount = this.poll.options.length;
+
+            this.chosenGroupNames = this.poll.groupNames;
           } else {
             this.router.navigate(['**']);
           }
@@ -55,9 +58,15 @@ export class CreatePollComponent implements OnInit {
       this.pollOptionsCount = this.poll.options.length;
     }
 
-    this.groupNames = ['group 1', 'group 2', 'group 3', 'group 4', 'group 5']; // take from DB
+    this.http.get<GenericResponse>(SERVER_URL + '/group/getAvailableGroupNames', HTTP_OPTIONS).toPromise()
+      .then(data => {
+        if (data.result) {
+          this.groupNames = data.result;
+        } else {
+          this.router.navigate(['**']);
+        }
+      });
     this.groupNames.sort();
-    this.chosenGroupNames = [];
 
     this.setCurrentDate();
   }
@@ -116,6 +125,8 @@ export class CreatePollComponent implements OnInit {
   }
 
   createPoll() {
+    this.poll.groupNames = this.chosenGroupNames;
+
     this.http.post<GenericResponse>(SERVER_URL + '/poll/create', this.poll, HTTP_OPTIONS).toPromise()
       .then(data => {
         if (data.success) {
@@ -130,6 +141,8 @@ export class CreatePollComponent implements OnInit {
   }
 
   updatePoll() {
+    this.poll.groupNames = this.chosenGroupNames;
+
     this.http.put<GenericResponse>(SERVER_URL + '/poll/update', this.poll, HTTP_OPTIONS).toPromise()
       .then(data => {
         if (data.success) {
