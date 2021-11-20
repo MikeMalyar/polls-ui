@@ -23,8 +23,13 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
 
-    this.myPolls.push(new MyPollDto(1, 'Тестове опитування 1', 3),
-      new MyPollDto(2, 'Тестове опитування номер 2', 20));   // take from DB
+    this.http.get<GenericResponse>(SERVER_URL + '/poll/getLoggedUserPollsList/0/3', HTTP_OPTIONS).toPromise()
+      .then(data => this.myPolls = data.result)
+      .catch(error => {
+        if (error.status === 401) {
+          this.router.navigate(['/login', {originUrl: '/profile'}]);
+        }
+      });
 
     this.myGroups.push(new MyGroupDto(1, '602', 10),
       new MyGroupDto(2, '607', 4));   // take from DB

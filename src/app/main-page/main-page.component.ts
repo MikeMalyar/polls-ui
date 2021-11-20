@@ -29,8 +29,13 @@ export class MainPageComponent implements OnInit {
     this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserFullName', HTTP_OPTIONS).toPromise()
       .then(data => this.userName = data.result);
 
-    this.myPolls.push(new MyPollDto(1, 'Тестове опитування 1', 3),
-      new MyPollDto(2, 'Тестове опитування номер 2', 20));   // take from DB
+    this.http.get<GenericResponse>(SERVER_URL + '/poll/getLoggedUserPollsList/0/3', HTTP_OPTIONS).toPromise()
+      .then(data => this.myPolls = data.result)
+      .catch(error => {
+        if (error.status === 401) {
+          this.myPolls = [];
+        }
+      });
 
     this.myGroups.push(new MyGroupDto(1, '602', 10),
       new MyGroupDto(2, '607', 4));   // take from DB
@@ -42,7 +47,6 @@ export class MainPageComponent implements OnInit {
     const getPollsUrl = this.route.snapshot.url.toString() === 'viewMyPolls'
       ? SERVER_URL + '/poll/getLoggedUserPolls/' + this.page + '/' + this.count
       : SERVER_URL + '/poll/getPollsAvailableForLoggedUser/' + this.page + '/' + this.count;
-    console.log('here');
     const length = this.polls.length;
     this.http.get<GenericResponse>(getPollsUrl, HTTP_OPTIONS).toPromise()
       .then(data => {
