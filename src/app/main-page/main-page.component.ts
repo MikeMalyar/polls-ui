@@ -37,8 +37,13 @@ export class MainPageComponent implements OnInit {
         }
       });
 
-    this.myGroups.push(new MyGroupDto(1, '602', 10),
-      new MyGroupDto(2, '607', 4));   // take from DB
+    this.http.get<GenericResponse>(SERVER_URL + '/group/getLoggedUserGroupsList/0/3', HTTP_OPTIONS).toPromise()
+      .then(data => this.myGroups = data.result)
+      .catch(error => {
+        if (error.status === 401) {
+          this.myGroups = [];
+        }
+      });
 
     this.addPollsFromDB();
   }
