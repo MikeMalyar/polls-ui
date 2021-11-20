@@ -4,7 +4,7 @@ import {Poll, PollOption} from '../models/poll';
 import {HttpClient} from '@angular/common/http';
 import {GenericResponse} from '../models/rest';
 import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -22,7 +22,7 @@ export class MainPageComponent implements OnInit {
   page = 0;
   count = 5;
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -39,13 +39,21 @@ export class MainPageComponent implements OnInit {
   }
 
   addPollsFromDB() {
-    const getPollsUrl = SERVER_URL + '/poll/getPollsAvailableForLoggedUser/' + this.page + '/' + this.count;
+    const getPollsUrl = this.route.snapshot.url.toString() === 'viewMyPolls'
+      ? SERVER_URL + '/poll/getLoggedUserPolls/' + this.page + '/' + this.count
+      : SERVER_URL + '/poll/getPollsAvailableForLoggedUser/' + this.page + '/' + this.count;
+    console.log('here');
     const length = this.polls.length;
     this.http.get<GenericResponse>(getPollsUrl, HTTP_OPTIONS).toPromise()
       .then(data => {
         this.polls = this.polls.concat(data.result);
         if (length === this.polls.length) {
           document.getElementById('loadMoreBtn').style.display = 'none';
+        }
+      })
+      .catch(error => {
+        if (error.status === 401) {
+          this.router.navigate(['/login', {originUrl: this.route.snapshot.url.toString()}]);
         }
       });
   }

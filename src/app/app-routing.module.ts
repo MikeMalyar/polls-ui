@@ -21,7 +21,8 @@ const routes: Routes = [
   {path: 'createGroup', component: CreateGroupComponent},
   {path: 'editGroup/:groupId', component: CreateGroupComponent},
   {path: '', component: MainPageComponent},
-  {path: '**', component: FourOFourComponent}
+  {path: 'viewMyPolls', component: MainPageComponent},
+  {path: '**', component: FourOFourComponent},
 ];
 
 @NgModule({

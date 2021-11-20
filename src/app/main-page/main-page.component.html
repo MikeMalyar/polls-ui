@@ -25,7 +25,7 @@
       </div>
 
       <div style="text-align: center; margin-top: 1rem;">
-        <a *ngIf="myPolls.length > 0" href="/viewPolls/my" style="color: #707070;">Переглянути всі</a>
+        <a *ngIf="myPolls.length > 0" href="/viewMyPolls" style="color: #707070;">Переглянути всі</a>
       </div>
     </div>
 
@@ -76,6 +76,8 @@
 
     <button *ngIf="polls.length > 0" class="btn btn-create-poll" style="margin-top: 3rem; margin-bottom: 0.5rem;"
             id="loadMoreBtn" (click)="loadMorePolls();">Завантажити ще</button>
+
+    <h6 *ngIf="polls.length === 0" style="text-align: center;">Немає контенту для відображення</h6>
   </div>
 
   <div style="width: 20%;">
