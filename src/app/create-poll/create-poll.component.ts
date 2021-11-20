@@ -24,6 +24,13 @@ export class CreatePollComponent implements OnInit {
   currentDate = new Date();
   currentDateString = '';
 
+  generateOptions = false;
+
+  prefix: string;
+  min: number;
+  max: number;
+  step: number;
+
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
   }
 
@@ -124,8 +131,33 @@ export class CreatePollComponent implements OnInit {
     }
   }
 
+  generatePollOptions() {
+    if (this.generateOptions) {
+      if (!this.prefix) {
+        this.prefix = '';
+      }
+      if (!this.min) {
+        this.min = 0;
+      }
+      if (!this.max) {
+        this.max = 10;
+      }
+      if (!this.step) {
+        this.step = 1;
+      }
+
+      this.poll.options = [];
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = this.min; i <= this.max; i += this.step) {
+        this.poll.options.push(new PollOption(null, this.prefix.trim() + ' ' + i, 0, false));
+      }
+    }
+  }
+
   createPoll() {
     this.poll.groupNames = this.chosenGroupNames;
+
+    this.generatePollOptions();
 
     this.http.post<GenericResponse>(SERVER_URL + '/poll/create', this.poll, HTTP_OPTIONS).toPromise()
       .then(data => {
@@ -142,6 +174,8 @@ export class CreatePollComponent implements OnInit {
 
   updatePoll() {
     this.poll.groupNames = this.chosenGroupNames;
+
+    this.generatePollOptions();
 
     this.http.put<GenericResponse>(SERVER_URL + '/poll/update', this.poll, HTTP_OPTIONS).toPromise()
       .then(data => {

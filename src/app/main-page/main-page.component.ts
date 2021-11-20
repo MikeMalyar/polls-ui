@@ -104,6 +104,10 @@ export class MainPageComponent implements OnInit {
           const poll = this.polls.find(p => p.id === pollId);
           const option = poll.options.find(o => Number(Number(o.id) === Number(optionId)));
 
+          if (option.haveMeVoted || option.votes > 0 && poll.canVoteOnlyOnce) {
+            return;
+          }
+
           poll.haveMeVoted = true;
           option.haveMeVoted = true;
 

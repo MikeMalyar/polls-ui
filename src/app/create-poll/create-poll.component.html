@@ -23,16 +23,44 @@
 
         <p style="margin-top: 1.5rem;">Опції </p>
 
-        <div *ngFor="let pollOption of poll.options; index as i;" id="pollOptionDiv-{{i}}" style="margin-top: 1rem; display: flex;">
-          <input type="text" class="input form-control" id="pollOption-{{i}}-{{pollOptionsCount}}" name="pollOption-{{i}}-{{pollOptionsCount}}"
-                 placeholder="Опція" ngModel [(ngModel)]="pollOption.value" required autocomplete="off">
+        <div *ngIf="!generateOptions">
+          <div *ngFor="let pollOption of poll.options; index as i;" id="pollOptionDiv-{{i}}" style="margin-top: 1rem; display: flex;">
+            <input type="text" class="input form-control" id="pollOption-{{i}}-{{pollOptionsCount}}" name="pollOption-{{i}}-{{pollOptionsCount}}"
+                   placeholder="Опція" ngModel [(ngModel)]="pollOption.value" required autocomplete="off">
 
-          <button class="btn" style="color: #f3f3f3; background-color: #707070; height: 100%; margin-left: 0.5rem;"
-                  [disabled]="i == 0 || i == 1" (click)="removePollOption(i);">&nbsp;x&nbsp;</button>
+            <button class="btn" style="color: #f3f3f3; background-color: #707070; height: 100%; margin-left: 0.5rem;"
+                    [disabled]="i == 0 || i == 1" (click)="removePollOption(i);">&nbsp;x&nbsp;</button>
+          </div>
+
+          <button class="btn" style="color: #f3f3f3; background-color: #707070; margin-top: 1rem;"
+                  (click)="addPollOption();">Додати опцію</button>
         </div>
 
-        <button class="btn" style="color: #f3f3f3; background-color: #707070; margin-top: 1rem;"
-                (click)="addPollOption();">Додати опцію</button>
+        <div style="display: flex; margin-top: 1rem;">
+          <input type="checkbox" class="input form-check" id="generatePollOptions" name="generatePollOptions"
+                 style="height: 1.5rem; width: 1.5rem; margin-left: 1rem;" #generatePollOptions="ngModel" [(ngModel)]="generateOptions" autocomplete="off">
+          <label for="generatePollOptions" style="display: flex; padding-left: 1rem; color: #707070;">Згенерувати опції</label>
+        </div>
+
+        <div style="display: flex; margin-top: 0.5rem;">
+          <input type="checkbox" class="input form-check" id="canChooseOnlyOnce" name="canChooseOnlyOnce"
+                 style="height: 1.5rem; width: 1.5rem; margin-left: 1rem;" #canChooseOnlyOnce="ngModel" [(ngModel)]="poll.canVoteOnlyOnce" autocomplete="off">
+          <label for="canChooseOnlyOnce" style="display: flex; padding-left: 1rem; color: #707070;">Голосувати тільки один раз</label>
+        </div>
+
+        <div *ngIf="generateOptions" style="display: flex;">
+          <input type="text" class="input form-control" id="generatePrefix" name="generatePrefix" placeholder="Префікс"
+                 style="min-height: 3rem; margin-top: 1rem;" #generatePrefix="ngModel" [(ngModel)]="prefix" required autocomplete="off">
+
+          <input type="number" class="input form-control" id="generateMin" name="generateMin" placeholder="Мін. значення"
+                 style="min-height: 3rem; margin-top: 1rem;" #generateMin="ngModel" [(ngModel)]="min" required autocomplete="off">
+
+          <input type="number" class="input form-control" id="generateMax" name="generateMax" placeholder="Макс. значення"
+                 style="min-height: 3rem; margin-top: 1rem;" #generateMax="ngModel" [(ngModel)]="max" required autocomplete="off">
+
+          <input type="number" class="input form-control" id="generateStep" name="generateStep" placeholder="Крок"
+                 style="min-height: 3rem; margin-top: 1rem;" #generateStep="ngModel" [(ngModel)]="step" required autocomplete="off">
+        </div>
 
         <input type="date" class="input form-control" id="pollDueDate" name="pollDueDate" placeholder="Дата закінчення дії"
                style="min-height: 3rem; margin-top: 3rem;" #pollDueDate="ngModel" [(ngModel)]="poll.dueDate" required autocomplete="off"
@@ -53,7 +81,7 @@
 
             <button class="btn" style="color: #f3f3f3; background-color: #707070; height: 100%;"
                     (click)="removeGroupOption(i);">&nbsp;x&nbsp;</button>
-        </div>
+          </div>
         </div>
 
         <input id="pollAccessInput" name="pollAccessInput" class="form-control" list="pollAccessDatalist" autocomplete="off"

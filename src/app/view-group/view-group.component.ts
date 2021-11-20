@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Group} from '../models/group';
 import {Poll, PollOption} from '../models/poll';
 import {GenericResponse} from '../models/rest';
@@ -20,7 +20,8 @@ export class ViewGroupComponent implements OnInit {
   page = 0;
   count = 5;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit() {
 
@@ -83,6 +84,10 @@ export class ViewGroupComponent implements OnInit {
           });
           const poll = this.polls.find(p => p.id === pollId);
           const option = poll.options.find(o => Number(Number(o.id) === Number(optionId)));
+
+          if (option.haveMeVoted || option.votes > 0 && poll.canVoteOnlyOnce) {
+            return;
+          }
 
           poll.haveMeVoted = true;
           option.haveMeVoted = true;

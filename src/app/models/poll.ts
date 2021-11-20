@@ -7,6 +7,7 @@ export class Poll {
   anonymousForAccessed: boolean;
   anonymousForOwner: boolean;
   anonymousForReacted: boolean;
+  canVoteOnlyOnce: boolean;
 
   options: PollOption[];
 

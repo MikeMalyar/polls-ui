@@ -72,6 +72,10 @@ export class ViewPollComponent implements OnInit {
           });
           const option = this.poll.options.find(o => Number(Number(o.id) === Number(optionId)));
 
+          if (option.haveMeVoted || option.votes > 0 && this.poll.canVoteOnlyOnce) {
+            return;
+          }
+
           this.poll.haveMeVoted = true;
           option.haveMeVoted = true;
 

@@ -58,16 +58,16 @@
       <button style="margin-top: 0; color: #707070; padding: 0;" class="btn bi bi-zoom-in" (click)="disableTextOverflow('poll-desc-' + poll.id)"></button>
 
       <div *ngIf="poll.options.length > 0" style="margin-top: 1rem;">
-        <div *ngFor="let option of poll.options" [ngClass]="poll.haveMeVoted ? 'progress' : 'form-check'" style="margin-bottom: 0.5rem; width: 100%; padding-left: 0; height: 2.5rem;">
-          <input *ngIf="!poll.haveMeVoted" class="btn-check" type="radio" name="poll-{{poll.id}}-option" value="{{option.id}}"
+        <div *ngFor="let option of poll.options" [ngClass]="poll.haveMeVoted || option.votes > 0 && poll.canVoteOnlyOnce ? 'progress' : 'form-check'" style="margin-bottom: 0.5rem; width: 100%; padding-left: 0; height: 2.5rem;">
+          <input *ngIf="!(poll.haveMeVoted || option.votes > 0 && poll.canVoteOnlyOnce)" class="btn-check" type="radio" name="poll-{{poll.id}}-option" value="{{option.id}}"
                  id="poll-{{poll.id}}-option-{{option.id}}" (input)="selectOption(poll.id);">
-          <label *ngIf="!poll.haveMeVoted" class="btn btn-outline-secondary" for="poll-{{poll.id}}-option-{{option.id}}" style="width: 100%;">
+          <label *ngIf="!(poll.haveMeVoted || option.votes > 0 && poll.canVoteOnlyOnce)" class="btn btn-outline-secondary" for="poll-{{poll.id}}-option-{{option.id}}" style="width: 100%;">
             {{option.value}}
           </label>
 
-          <div *ngIf="poll.haveMeVoted" class="progress-bar progress-bar-striped" role="progressbar" title="{{option.value}}"
-               [ngStyle]="{'width.%': calculateOptionPercentage(poll.id, option.id), 'background-color': option.haveMeVoted ? '#707070' : 'darkgrey'}"
-               style="height: 2.5rem;">{{calculateOptionPercentage(poll.id, option.id)}}%</div>
+          <div *ngIf="poll.haveMeVoted || option.votes > 0 && poll.canVoteOnlyOnce" class="progress-bar progress-bar-striped" role="progressbar" title="{{option.value}}"
+               [ngStyle]="{'width.%': option.votes > 0 && poll.canVoteOnlyOnce ? 100 : calculateOptionPercentage(poll.id, option.id), 'background-color': poll.haveMeVoted || option.votes > 0 && poll.canVoteOnlyOnce ? '#707070' : 'darkgrey'}"
+               style="height: 2.5rem;">{{option.votes > 0 && poll.canVoteOnlyOnce ? option.value : calculateOptionPercentage(poll.id, option.id) + '%'}}</div>
         </div>
 
         <button *ngIf="!poll.haveMeVoted" class="btn btn-vote" id="poll-submit-{{poll.id}}" (click)="vote(poll.id);">Проголосувати</button>
