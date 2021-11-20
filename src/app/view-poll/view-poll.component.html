@@ -12,7 +12,7 @@
         <div *ngFor="let option of poll.options; index as optionIndex" style="margin-bottom: 2rem; margin-left: 1rem; margin-top: 1rem;">
           <p style="font-weight: bold; margin: 0;">{{option.value}}</p>
 
-          <p *ngFor="let username of option.usersVoted; index as i;" style="margin: 0;"><span *ngIf="i < displayVotesCount[optionIndex]">{{username}}</span></p>
+          <p *ngFor="let username of option.usersVoted; index as i;" style="margin: 0;"><span *ngIf="i < displayVotesCount[optionIndex]">{{option.fullNamesVoted[username]}}</span></p>
 
           <button style="margin-top: 0; color: #707070; padding: 0;" class="btn bi" [ngClass]="this.displayVotesCount[optionIndex] === DISPLAY_VOTES_COUNT ? 'bi-zoom-in' : 'bi-zoom-out'" (click)="displayAllVotes(optionIndex)"></button>
         </div>

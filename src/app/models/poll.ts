@@ -23,6 +23,7 @@ export class PollOption {
   haveMeVoted: boolean;
 
   usersVoted: string[];
+  fullNamesVoted: Map<string, string>;
 
   constructor(id, value, votes, haveMeVoted) {
     this.id = id;

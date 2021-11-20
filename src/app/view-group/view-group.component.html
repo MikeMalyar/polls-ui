@@ -58,5 +58,8 @@
         <button *ngIf="!poll.haveMeVoted" class="btn btn-vote" id="poll-submit-{{poll.id}}" (click)="vote(poll.id);">Проголосувати</button>
       </div>
     </div>
+
+    <button *ngIf="polls.length > 0" class="btn btn-create-poll" style="margin-top: 3rem; margin-bottom: 0.5rem;"
+            id="loadMoreBtn" (click)="loadMorePolls();">Завантажити ще</button>
   </div>
 </div>

@@ -13,9 +13,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class ViewGroupComponent implements OnInit {
 
-  group: Group;
+  group: Group = new Group();
 
   polls: Poll[] = [];
+
+  page = 0;
+  count = 5;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) { }
 
@@ -25,27 +28,29 @@ export class ViewGroupComponent implements OnInit {
       .then(data => {
         if (data.result) {
           this.group = data.result;
+          this.addPollsFromDB();
         } else {
           this.router.navigate(['**']);
         }
       });
+  }
 
-    const poll1 = new Poll();
-    // @ts-ignore
-    poll1.id = 1;
-    poll1.title = 'Тестове опитування 1';
-    poll1.description = 'Опис цього опитування призначений для перевірки його відображення у веб браузері.'.repeat(3);
-    poll1.options = [new PollOption(1, 'Опція 1', 8, false), new PollOption(2, 'Опція 2', 5, false)];
-    poll1.requiredForFilling = true;
-    this.polls.push(poll1);
+  addPollsFromDB() {
+    const getPollsUrl = SERVER_URL + '/poll/getPollsAvailableForGroup/' + this.group.id + '/' + this.page + '/' + this.count;
+    const length = this.polls.length;
+    this.http.get<GenericResponse>(getPollsUrl, HTTP_OPTIONS).toPromise()
+      .then(data => {
+        this.polls = this.polls.concat(data.result);
+        if (length === this.polls.length) {
+          document.getElementById('loadMoreBtn').style.display = 'none';
+        }
+      });
+  }
 
-    const poll2 = new Poll();
-    // @ts-ignore
-    poll2.id = 2;
-    poll2.title = 'Тестове опитування 2';
-    poll2.description = 'Опис цього тестового опитування №2 призначений для перевірки його відображення у веб браузері.'.repeat(3);
-    poll2.options = [new PollOption(3, 'Тестова опція 1', 2, false), new PollOption(4, 'Тестова опція 2', 32, false)];
-    this.polls.push(poll2);
+  loadMorePolls() {
+    this.page++;
+
+    this.addPollsFromDB();
   }
 
   disableTextOverflow(id) {
