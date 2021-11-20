@@ -20,10 +20,14 @@ export class ViewGroupComponent implements OnInit {
   page = 0;
   count = 5;
 
+  loggedUsername = '';
+
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
+
+    this.group.memberNames = [];
 
     this.http.get<GenericResponse>(SERVER_URL + '/group/get/' + this.route.snapshot.paramMap.get('groupId'), HTTP_OPTIONS).toPromise()
       .then(data => {
@@ -32,6 +36,13 @@ export class ViewGroupComponent implements OnInit {
           this.addPollsFromDB();
         } else {
           this.router.navigate(['**']);
+        }
+      });
+
+    this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserName', HTTP_OPTIONS).toPromise()
+      .then(data => {
+        if (data.result) {
+          this.loggedUsername = data.result;
         }
       });
   }

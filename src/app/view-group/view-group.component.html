@@ -20,7 +20,7 @@
     <div style="display: flex;">
       <h4>Группа</h4>
       <div style="text-align: right; width: 100%;">
-        <a href="editGroup/{{group.id}}" class="bi bi-pencil-square" style="margin: auto; font-size: 1.5rem; color: #707070;"></a>
+        <a *ngIf="this.group.memberNames.includes(this.loggedUsername)" href="editGroup/{{group.id}}" class="bi bi-pencil-square" style="margin: auto; font-size: 1.5rem; color: #707070;"></a>
       </div>
     </div>
 
