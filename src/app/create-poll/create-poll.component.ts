@@ -31,6 +31,8 @@ export class CreatePollComponent implements OnInit {
   max: number;
   step: number;
 
+  loggedUserName = '';
+
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router) {
   }
 
@@ -38,11 +40,13 @@ export class CreatePollComponent implements OnInit {
     const pollId = this.route.snapshot.paramMap.get('pollId');
     this.chosenGroupNames = [];
 
-    this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserFullName', HTTP_OPTIONS).toPromise()
+    this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserName', HTTP_OPTIONS).toPromise()
       .then(data => {
         if (!data.result) {
           const url = pollId ? '/editPoll/' + pollId : '/createPoll';
           this.router.navigate(['/login', {originUrl: url}]);
+        } else {
+          this.loggedUserName = data.result;
         }
       });
 
@@ -54,6 +58,10 @@ export class CreatePollComponent implements OnInit {
             this.pollOptionsCount = this.poll.options.length;
 
             this.chosenGroupNames = this.poll.groupNames;
+
+            if (this.poll.ownerUsername !== this.loggedUserName) {
+              this.router.navigate(['**']);
+            }
           } else {
             this.router.navigate(['**']);
           }

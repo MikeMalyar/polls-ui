@@ -19,6 +19,8 @@ export class ViewPollComponent implements OnInit {
   displayVotesCount = [];
   descriptionFullDisplayed = false;
 
+  loggedUserName = '';
+
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
   }
 
@@ -34,6 +36,13 @@ export class ViewPollComponent implements OnInit {
           this.poll.options.forEach(_ => {
             this.displayVotesCount.push(this.DISPLAY_VOTES_COUNT);
           });
+
+          this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserName', HTTP_OPTIONS).toPromise()
+            .then(username => {
+              if (username.result) {
+                 this.loggedUserName = username.result;
+              }
+            });
         } else {
           this.router.navigate(['**']);
         }

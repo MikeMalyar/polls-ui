@@ -50,6 +50,10 @@ export class CreateGroupComponent implements OnInit {
                 if (gropdData.result) {
                   this.group = gropdData.result;
                   this.processGroupMembers();
+
+                  if (!this.group.memberNames.includes(this.username)) {
+                    this.router.navigate(['**']);
+                  }
                 } else {
                   this.router.navigate(['**']);
                 }

@@ -8,6 +8,7 @@ export class Poll {
   anonymousForOwner: boolean;
   anonymousForReacted: boolean;
   canVoteOnlyOnce: boolean;
+  ownerUsername: string;
 
   options: PollOption[];
 
