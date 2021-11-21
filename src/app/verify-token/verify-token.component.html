@@ -1,0 +1,11 @@
+<app-header></app-header>
+
+<div style="text-align: center; margin-top: 6rem;">
+  <h2>Верифікація електронної пошти</h2>
+  <h4>Зачекайте доки йде верифікація</h4>
+
+  <div *ngIf="tokenValid" style="margin-top: 3rem;">
+    <h4>Акаунт підтверджено, увійдіть за посиланням:</h4>
+    <a style="margin-top: 1rem;" href="login">Увійти</a>
+  </div>
+</div>

@@ -9,6 +9,7 @@ import {ProfileComponent} from './profile/profile.component';
 import {ViewGroupComponent} from './view-group/view-group.component';
 import {CreateGroupComponent} from './create-group/create-group.component';
 import {FourOFourComponent} from './four-o-four/four-o-four.component';
+import {VerifyTokenComponent} from './verify-token/verify-token.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'editGroup/:groupId', component: CreateGroupComponent},
   {path: '', component: MainPageComponent},
   {path: 'viewMyPolls', component: MainPageComponent},
+  {path: 'verifyToken/:token', component: VerifyTokenComponent},
   {path: '**', component: FourOFourComponent},
 ];
 
