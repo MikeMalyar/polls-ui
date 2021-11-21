@@ -18,6 +18,7 @@ import { CreateGroupComponent } from './create-group/create-group.component';
 import {HttpClientModule} from '@angular/common/http';
 import { FourOFourComponent } from './four-o-four/four-o-four.component';
 import { VerifyTokenComponent } from './verify-token/verify-token.component';
+import { JoinGroupComponent } from './join-group/join-group.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { VerifyTokenComponent } from './verify-token/verify-token.component';
     ViewGroupComponent,
     CreateGroupComponent,
     FourOFourComponent,
-    VerifyTokenComponent
+    VerifyTokenComponent,
+    JoinGroupComponent
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ import {GenericResponse} from '../models/rest';
 import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
+import { v4 as uuid } from 'uuid';
 
 @Component({
   selector: 'app-create-group',
@@ -101,6 +102,9 @@ export class CreateGroupComponent implements OnInit {
   }
 
   createGroup() {
+    if (!this.group.accessToken) {
+      this.group.accessToken = uuid();
+    }
     this.http.post<GenericResponse>(SERVER_URL + '/group/create', this.group, HTTP_OPTIONS).toPromise()
       .then(data => {
         if (data.success) {

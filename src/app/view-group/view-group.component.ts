@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Group} from '../models/group';
 import {Poll, PollOption} from '../models/poll';
 import {GenericResponse} from '../models/rest';
-import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
+import {HTTP_OPTIONS, SERVER_URL, SELF_URL} from '../config/http-config';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -21,6 +21,8 @@ export class ViewGroupComponent implements OnInit {
   count = 5;
 
   loggedUsername = '';
+
+  selfUrl = SELF_URL;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
   }

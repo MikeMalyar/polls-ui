@@ -32,6 +32,11 @@
       <p>Опис: {{group.description}}</p>
     </div>
 
+    <div style="margin-top: 1rem;">
+      <label for="groupAccessToken">Посилання для доєднання до групи:</label><br>
+      <input type="text" id="groupAccessToken" disabled value="{{selfUrl + 'joinGroup/' + group.accessToken}}"
+        style="width: 100%;">
+
     <h6 style="margin-top: 1rem;">Опитування групи:</h6>
 
     <div *ngFor="let poll of polls" id="poll-div-{{poll.id}}" style="background-color: white;

@@ -10,6 +10,7 @@ import {ViewGroupComponent} from './view-group/view-group.component';
 import {CreateGroupComponent} from './create-group/create-group.component';
 import {FourOFourComponent} from './four-o-four/four-o-four.component';
 import {VerifyTokenComponent} from './verify-token/verify-token.component';
+import {JoinGroupComponent} from './join-group/join-group.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: '', component: MainPageComponent},
   {path: 'viewMyPolls', component: MainPageComponent},
   {path: 'verifyToken/:token', component: VerifyTokenComponent},
+  {path: 'joinGroup/:token', component: JoinGroupComponent},
   {path: '**', component: FourOFourComponent},
 ];
 
