@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
         if (data.success) {
           const originUrl = this.route.snapshot.paramMap.get('originUrl');
           this.cookieService.set('JSESSIONID', '8434632B94257986AEFBB9EA61DC568B', new Date('2021-11-25'),
-            null, SERVER_URL, true, 'Lax');
+            null, SERVER_URL, true, 'None');
           if (originUrl !== null && originUrl !== undefined) {
             this.router.navigate([originUrl]);
           } else {
