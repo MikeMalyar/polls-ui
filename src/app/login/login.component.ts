@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit {
       .subscribe(data => {
         if (data.success) {
           const originUrl = this.route.snapshot.paramMap.get('originUrl');
-          console.log(this.cookieService.get('JSESSIONID'));
+          this.cookieService.set('JSESSIONID', '8434632B94257986AEFBB9EA61DC568B', new Date('2021-11-25'),
+            null, SERVER_URL, true, 'Lax');
           if (originUrl !== null && originUrl !== undefined) {
             this.router.navigate([originUrl]);
           } else {
