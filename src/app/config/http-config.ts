@@ -8,6 +8,6 @@ export const HTTP_OPTIONS = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': 'https://polls-chnu-ui.herokuapp.com',
     'Access-Control-Allow-Credentials': 'true',
-    'Access-Control-Allow-Headers': 'content-type,withcredentials'
+    'Access-Control-Allow-Headers': 'content-type,withcredentials,set-cookie',
   }), withCredentials: true
 };
