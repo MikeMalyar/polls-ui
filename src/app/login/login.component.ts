@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
 import {GenericResponse} from '../models/rest';
 import {ActivatedRoute, Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
 
   errorMessage: string;
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute,
+              private cookieService: CookieService) {
   }
 
   ngOnInit() {
@@ -27,6 +29,7 @@ export class LoginComponent implements OnInit {
       .subscribe(data => {
         if (data.success) {
           const originUrl = this.route.snapshot.paramMap.get('originUrl');
+          console.log(this.cookieService.get('JSESSIONID'));
           if (originUrl !== null && originUrl !== undefined) {
             this.router.navigate([originUrl]);
           } else {

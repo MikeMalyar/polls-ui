@@ -19,6 +19,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { FourOFourComponent } from './four-o-four/four-o-four.component';
 import { VerifyTokenComponent } from './verify-token/verify-token.component';
 import { JoinGroupComponent } from './join-group/join-group.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { JoinGroupComponent } from './join-group/join-group.component';
     RouterModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
