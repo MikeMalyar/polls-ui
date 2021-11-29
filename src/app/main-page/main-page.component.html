@@ -49,6 +49,9 @@
     <a href="createPoll" class="btn btn-create-poll">Створити опитування
     </a>
 
+    <a href="createGroup" class="btn btn-create-poll" style="margin-top: 1rem;">Створити группу
+    </a>
+
     <div *ngFor="let poll of polls" id="poll-div-{{poll.id}}" style="background-color: white; margin-left: 1rem; margin-right: 1rem;
          margin-top: 1rem; border-radius: 5px; padding: 1rem;" [ngClass]="poll.requiredForFilling === true ? 'required-border' : ''">
       <a href="viewPoll/{{poll.id}}" style="color: #707070; font-weight: bold;">{{poll.title}}</a>
