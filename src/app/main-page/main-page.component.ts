@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {GenericResponse} from '../models/rest';
 import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
 import {ActivatedRoute, Router} from '@angular/router';
+import {processPollDescription} from '../util/utils';
 
 @Component({
   selector: 'app-main-page',
@@ -56,6 +57,7 @@ export class MainPageComponent implements OnInit {
     this.http.get<GenericResponse>(getPollsUrl, HTTP_OPTIONS).toPromise()
       .then(data => {
         this.polls = this.polls.concat(data.result);
+        this.polls.forEach(poll => processPollDescription(poll));
         if (length === this.polls.length) {
           document.getElementById('loadMoreBtn').style.display = 'none';
         }

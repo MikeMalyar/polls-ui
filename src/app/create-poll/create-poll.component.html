@@ -15,7 +15,8 @@
 
         <textarea class="textarea form-control" id="pollDescription" name="pollDescription"
                   placeholder="Опис опитування" style="min-height: 3rem; margin-top: 1.5rem;"
-                  #pollDescription="ngModel" [(ngModel)]="poll.description" autocomplete="off" maxlength="2048"></textarea>
+                  #pollDescription="ngModel" [(ngModel)]="poll.description" autocomplete="off" maxlength="2048"
+                  rows="10"></textarea>
 
         <div *ngIf="pollDescription.errors && (pollDescription.dirty || pollDescription.touched)" class="alert alert-danger" style="margin-top: 1rem;">
           <div [hidden]="!pollDescription.errors.required">Поле "Опис опитування" є обов'язковим для заповнення!</div>

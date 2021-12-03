@@ -32,7 +32,9 @@
 
       <h6 *ngIf="poll.requiredForFilling === true && !poll.haveMeVoted" style="margin-top: 1rem; color: red;">Це опитування обов'язкове для заповнення</h6>
 
-      <p *ngIf="poll.description" id="poll-desc-{{poll.id}}" class="text-with-three-dots ten-lines-text" style="margin-top: 1rem; margin-bottom: 0;">{{poll.description}}</p>
+      <p *ngIf="poll.description" id="poll-desc-{{poll.id}}" class="text-with-three-dots ten-lines-text"
+           style="margin-top: 1rem; margin-bottom: 0;" [innerHTML]="poll.description">
+      </p>
 
       <button style="margin-top: 0; color: #707070; padding: 0;" class="btn bi" [ngClass]="this.descriptionFullDisplayed ? 'bi-zoom-out' : 'bi-zoom-in'" (click)="disableTextOverflow('poll-desc-' + poll.id)"></button>
 

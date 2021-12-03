@@ -56,7 +56,8 @@
          margin-top: 1rem; border-radius: 5px; padding: 1rem;" [ngClass]="poll.requiredForFilling === true ? 'required-border' : ''">
       <a href="viewPoll/{{poll.id}}" style="color: #707070; font-weight: bold;">{{poll.title}}</a>
 
-      <p *ngIf="poll.description" id="poll-desc-{{poll.id}}" class="text-with-three-dots three-lines-text" style="margin-top: 1rem; margin-bottom: 0;">{{poll.description}}</p>
+      <p *ngIf="poll.description" id="poll-desc-{{poll.id}}" class="text-with-three-dots three-lines-text"
+         style="margin-top: 1rem; margin-bottom: 0;" [innerHTML]="poll.description"></p>
 
       <button style="margin-top: 0; color: #707070; padding: 0;" class="btn bi bi-zoom-in" (click)="disableTextOverflow('poll-desc-' + poll.id)"></button>
 

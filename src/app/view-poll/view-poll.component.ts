@@ -4,6 +4,7 @@ import {GenericResponse} from '../models/rest';
 import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
+import {processPollDescription} from '../util/utils';
 
 @Component({
   selector: 'app-view-poll',
@@ -32,6 +33,7 @@ export class ViewPollComponent implements OnInit {
       .then(data => {
         if (data.result) {
           this.poll = data.result;
+          processPollDescription(this.poll);
 
           this.poll.options.forEach(_ => {
             this.displayVotesCount.push(this.DISPLAY_VOTES_COUNT);
@@ -40,7 +42,7 @@ export class ViewPollComponent implements OnInit {
           this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserName', HTTP_OPTIONS).toPromise()
             .then(username => {
               if (username.result) {
-                 this.loggedUserName = username.result;
+                this.loggedUserName = username.result;
               }
             });
         } else {
