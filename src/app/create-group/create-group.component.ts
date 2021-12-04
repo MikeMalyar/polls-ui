@@ -6,6 +6,9 @@ import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import { v4 as uuid } from 'uuid';
 
+/*
+  Компонент, відповіданьний за сторінки створення та редагування групи
+ */
 @Component({
   selector: 'app-create-group',
   templateUrl: './create-group.component.html',
@@ -13,9 +16,12 @@ import { v4 as uuid } from 'uuid';
 })
 export class CreateGroupComponent implements OnInit {
 
+  // об'єкт групи
   group: Group;
 
+  // авторизований користувач
   username: string;
+  // список доступних користувачів для групи
   availableUserNames: string[] = [];
 
   memberNameInputValue: string;
@@ -23,11 +29,15 @@ export class CreateGroupComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
   }
 
+  /*
+    Ініціалізація компоненту
+   */
   ngOnInit() {
 
     this.group = new Group();
     this.group.memberNames = [];
 
+    // якщо цей параметр доступний то редагуємо існуючу групу
     const groupId = this.route.snapshot.paramMap.get('groupId');
 
     this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserName', HTTP_OPTIONS).toPromise()
@@ -45,17 +55,21 @@ export class CreateGroupComponent implements OnInit {
               }
             });
 
+          // якщо група вже існує
           if (groupId) {
             this.http.get<GenericResponse>(SERVER_URL + '/group/get/' + groupId, HTTP_OPTIONS).toPromise()
               .then(gropdData => {
                 if (gropdData.result) {
+                  // витягаємо групу з відповіді сервера
                   this.group = gropdData.result;
                   this.processGroupMembers();
 
+                  // якщо користувач не має доступу до групи, адресуємо на 404
                   if (!this.group.memberNames.includes(this.username)) {
                     this.router.navigate(['**']);
                   }
                 } else {
+                  // такої групи не існує, переадресація на 404
                   this.router.navigate(['**']);
                 }
               });
@@ -66,6 +80,9 @@ export class CreateGroupComponent implements OnInit {
       });
   }
 
+  /*
+    Метод для обробки доступних користувачів для групи
+   */
   processGroupMembers() {
     if (!this.group.memberNames.includes(this.username)) {
       this.group.memberNames.push(this.username);
@@ -79,6 +96,9 @@ export class CreateGroupComponent implements OnInit {
     }
   }
 
+  /*
+    Метод для вибору користувача до групи
+   */
   addMemberNameOption() {
     const memberNameInputValue = this.memberNameInputValue;
     document.getElementById('availableUserNamesList').childNodes.forEach(child => {
@@ -92,6 +112,9 @@ export class CreateGroupComponent implements OnInit {
     });
   }
 
+  /*
+    Метод для видалення користувача з групи
+   */
   removeMemberNameOption(i) {
     const memberName = this.group.memberNames[i];
     if (memberName !== this.username) {
@@ -101,8 +124,12 @@ export class CreateGroupComponent implements OnInit {
     }
   }
 
+  /*
+    Метод для створення групи
+   */
   createGroup() {
     if (!this.group.accessToken) {
+      // створюємо унікальний токен для доступу до групи
       this.group.accessToken = uuid();
     }
     this.http.post<GenericResponse>(SERVER_URL + '/group/create', this.group, HTTP_OPTIONS).toPromise()
@@ -113,11 +140,15 @@ export class CreateGroupComponent implements OnInit {
       })
       .catch(error => {
         if (error.status === 401) {
-          this.router.navigate(['/login', {originUrl: '/createPoll'}]);
+          // користувач неавторизований, переадресація на сторінку входу
+          this.router.navigate(['/login', {originUrl: '/createGroup'}]);
         }
       });
   }
 
+  /*
+    Метод для редагування групи
+   */
   updateGroup() {
     this.http.put<GenericResponse>(SERVER_URL + '/group/update', this.group, HTTP_OPTIONS).toPromise()
       .then(data => {
@@ -127,6 +158,7 @@ export class CreateGroupComponent implements OnInit {
       })
       .catch(error => {
         if (error.status === 401) {
+          // користувач неавторизований, переадресація на сторінку входу
           this.router.navigate(['/login', {originUrl: '/createPoll'}]);
         }
       });
