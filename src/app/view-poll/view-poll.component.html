@@ -59,6 +59,41 @@
         <button *ngIf="!poll.haveMeVoted" class="btn btn-vote" id="poll-submit-{{poll.id}}" (click)="vote(poll.id);">Проголосувати</button>
       </div>
     </div>
+
+    <div *ngIf="poll.ownerUsername === loggedUserName" class="view-poll-admin-vote-div">
+      <div style="display: flex;">
+        <p style="color: red; width: 100%;">Секція адміністратора</p>
+
+        <div style="text-align: right; width: 100%;">
+          <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#adminVoteCollapse"
+                  aria-expanded="false" aria-controls="adminVoteCollapse" (click)="showAdminPanel();">{{adminPanelShown ? 'Приховати' : 'Розгорнути'}}</button>
+        </div>
+      </div>
+      <div class="collapse" id="adminVoteCollapse">
+        <form id="adminVoteForm" #adminVoteForm="ngForm">
+          <div *ngIf="poll.groupNames && poll.groupNames.length > 0">
+            <p>Проголосувати за користувача:</p>
+
+            <select id="admin-select-username" name='admin-select-username' class="form-control" (change)="setAvailableOptionsForUserName();"
+                    #adminSelectUsername="ngModel" [(ngModel)]="adminChosenUsername" required>
+              <option disabled></option>
+              <option *ngFor="let username of availableUserNamesForAdmin" value="{{username}}">{{adminUserNamesToFullNames[username]}}</option>
+            </select>
+
+            <p style="margin-top: 1rem;">Проголосувати за опцію:</p>
+
+            <select id="admin-select-option" name="admin-select-option" class="form-control"
+                    #adminSelectOption="ngModel" [(ngModel)]="adminChosenOption" required>
+              <option disabled></option>
+              <option *ngFor="let option of availableOptionsForAdmin">{{option}}</option>
+            </select>
+
+            <button class="btn btn-danger" style="margin-top: 1rem;" (click)="voteAsAdmin();"
+                    [disabled]="!adminVoteForm.form.valid">Проголосувати як адміністратор</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 
   <div class="view-poll-left-div-mobile">

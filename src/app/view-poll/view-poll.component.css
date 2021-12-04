@@ -54,6 +54,16 @@
   display: none;
 }
 
+.view-poll-admin-vote-div {
+  display: block;
+  border-color: red;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: 1px;
+  margin: 1rem;
+  padding: 1rem;
+}
+
 @media screen and (max-device-width: 720px) {
 
   .view-poll-main-div {

@@ -5,6 +5,7 @@ import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 import {processPollDescription} from '../util/utils';
+import {Group} from '../models/group';
 
 @Component({
   selector: 'app-view-poll',
@@ -22,6 +23,16 @@ export class ViewPollComponent implements OnInit {
 
   loggedUserName = '';
 
+  availableUserNamesForAdmin = [];
+  availableOptionsForAdmin = [];
+
+  adminChosenUsername = '';
+  adminChosenOption = '';
+
+  adminUserNamesToFullNames = new Map();
+
+  adminPanelShown = false;
+
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
   }
 
@@ -34,6 +45,7 @@ export class ViewPollComponent implements OnInit {
         if (data.result) {
           this.poll = data.result;
           processPollDescription(this.poll);
+          this.getUserNamesNotVoted();
 
           this.poll.options.forEach(_ => {
             this.displayVotesCount.push(this.DISPLAY_VOTES_COUNT);
@@ -100,6 +112,40 @@ export class ViewPollComponent implements OnInit {
       });
   }
 
+  voteFor(pollOption, username) {
+    const option = this.poll.options.find(o => o.value === pollOption);
+
+    if (option.usersVoted && option.usersVoted.includes(username) || option.votes > 0 && this.poll.canVoteOnlyOnce) {
+      return;
+    }
+
+    if (username === this.loggedUserName) {
+      this.poll.haveMeVoted = true;
+      option.haveMeVoted = true;
+    }
+
+    option.votes++;
+    option.usersVoted.push(username);
+
+    this.http.get<GenericResponse>(SERVER_URL + '/user/fullNameByUserName?username=' + username, HTTP_OPTIONS).toPromise()
+      .then(fullName => {
+        if (fullName.result) {
+          if (!option.fullNamesVoted) {
+            option.fullNamesVoted = new Map();
+          }
+          option.fullNamesVoted[username] = fullName.result;
+        }
+      });
+
+    this.http.get<GenericResponse>(SERVER_URL + '/poll/voteFor/' + option.id + '?username=' + username, HTTP_OPTIONS).subscribe();
+
+    this.availableUserNamesForAdmin = [];
+    this.availableOptionsForAdmin = [];
+    this.adminChosenUsername = '';
+    this.adminChosenOption = '';
+    this.getUserNamesNotVoted();
+  }
+
   calculateOptionPercentage(pollId, optionId) {
     const option = this.poll.options.find(o => o.id === optionId);
 
@@ -115,5 +161,50 @@ export class ViewPollComponent implements OnInit {
     } else {
       this.displayVotesCount[optionIndex] = this.DISPLAY_VOTES_COUNT;
     }
+  }
+
+  getUserNamesNotVoted() {
+    this.availableUserNamesForAdmin = [];
+    this.adminUserNamesToFullNames = new Map();
+    const userNamesVoted = [];
+    this.poll.options.forEach(option => {
+      option.usersVoted.forEach(username => {
+        if (!userNamesVoted.includes(username)) {
+          userNamesVoted.push(username);
+        }
+      });
+    });
+    this.poll.groupNames.forEach(groupName => {
+      this.http.get<GenericResponse>(SERVER_URL + '/group/getByTitle/' + groupName, HTTP_OPTIONS).toPromise()
+        .then(data => {
+          if (data.result) {
+            const group: Group = data.result;
+            group.memberNames.forEach(username => {
+              if (!userNamesVoted.includes(username) && !this.availableUserNamesForAdmin.includes(username)) {
+                this.availableUserNamesForAdmin.push(username);
+                this.http.get<GenericResponse>(SERVER_URL + '/user/fullNameByUserName?username=' + username, HTTP_OPTIONS).toPromise()
+                  .then(fullName => {
+                    if (fullName.result) {
+                      this.adminUserNamesToFullNames[username] = fullName.result;
+                    }
+                  });
+              }
+            });
+          }
+        });
+    });
+  }
+
+  setAvailableOptionsForUserName() {
+    this.availableOptionsForAdmin = this.poll.options.filter(option => !option.fullNamesVoted[this.adminChosenUsername])
+      .map(option => option.value);
+  }
+
+  voteAsAdmin() {
+    this.voteFor(this.adminChosenOption, this.adminChosenUsername);
+  }
+
+  showAdminPanel() {
+    this.adminPanelShown = !this.adminPanelShown;
   }
 }
