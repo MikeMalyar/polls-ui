@@ -159,7 +159,7 @@ export class CreateGroupComponent implements OnInit {
       .catch(error => {
         if (error.status === 401) {
           // користувач неавторизований, переадресація на сторінку входу
-          this.router.navigate(['/login', {originUrl: '/createPoll'}]);
+          this.router.navigate(['/login', {originUrl: '/createGroup'}]);
         }
       });
   }
