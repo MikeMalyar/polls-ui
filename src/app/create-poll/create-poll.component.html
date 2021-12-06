@@ -15,7 +15,7 @@
 
         <textarea class="textarea form-control" id="pollDescription" name="pollDescription"
                   placeholder="Опис опитування" style="min-height: 3rem; margin-top: 1.5rem;"
-                  #pollDescription="ngModel" [(ngModel)]="poll.description" autocomplete="off" maxlength="2048"
+                  #pollDescription="ngModel" [(ngModel)]="poll.description" autocomplete="off" maxlength="8192"
                   rows="10"></textarea>
 
         <div *ngIf="pollDescription.errors && (pollDescription.dirty || pollDescription.touched)" class="alert alert-danger" style="margin-top: 1rem;">

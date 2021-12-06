@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Poll, PollOption} from '../models/poll';
+import {Poll} from '../models/poll';
 import {GenericResponse} from '../models/rest';
 import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
 import {HttpClient} from '@angular/common/http';
@@ -50,6 +50,9 @@ export class ViewPollComponent implements OnInit {
           this.poll.options.forEach(_ => {
             this.displayVotesCount.push(this.DISPLAY_VOTES_COUNT);
           });
+          if (new Date() > new Date(this.poll.dueDate)) {
+            this.poll.haveMeVoted = true;
+          }
 
           this.http.get<GenericResponse>(SERVER_URL + '/user/loggedUserName', HTTP_OPTIONS).toPromise()
             .then(username => {

@@ -57,7 +57,12 @@ export class MainPageComponent implements OnInit {
     this.http.get<GenericResponse>(getPollsUrl, HTTP_OPTIONS).toPromise()
       .then(data => {
         this.polls = this.polls.concat(data.result);
-        this.polls.forEach(poll => processPollDescription(poll));
+        this.polls.forEach(poll => {
+          processPollDescription(poll);
+          if (new Date() > new Date(poll.dueDate)) {
+            poll.haveMeVoted = true;
+          }
+        });
         if (length === this.polls.length) {
           document.getElementById('loadMoreBtn').style.display = 'none';
         }
