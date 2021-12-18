@@ -24,6 +24,8 @@ export class ViewGroupComponent implements OnInit {
 
   selfUrl = SELF_URL;
 
+  userNamesMap = [];
+
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
   }
 
@@ -36,6 +38,16 @@ export class ViewGroupComponent implements OnInit {
         if (data.result) {
           this.group = data.result;
           this.addPollsFromDB();
+
+          this.group.memberNames.forEach(username => {
+            this.userNamesMap.push(username);
+            this.http.get<GenericResponse>(SERVER_URL + '/user/fullNameByUserName?username=' + username, HTTP_OPTIONS).toPromise()
+              .then(fullName => {
+                if (fullName.result) {
+                  this.userNamesMap[username] = fullName.result;
+                }
+              });
+          });
         } else {
           this.router.navigate(['**']);
         }
