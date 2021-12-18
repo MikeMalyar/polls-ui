@@ -80,5 +80,37 @@
     <button type="button" class="btn save-profile-btn"
             [disabled]="!profileForm.valid" (click)="updateProfile();">Оновити профіль
     </button>
+
+    <form #passForm="ngForm" style="margin-top: 3rem;">
+      <p>Зміна паролю:</p>
+
+      <div class="form-group" style="margin-top: 1rem;">
+        <input type="password" class="input font-registration form-control" id="passInput" name="passInput"
+               placeholder="Пароль" [(ngModel)]="password" #passInput="ngModel"
+               style="min-height: 3rem;" required>
+
+        <div *ngIf="passInput.errors && (passInput.dirty || passInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+          <div [hidden]="!passInput.errors.required" class="label">Введіть пароль</div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top: 1rem;">
+        <input type="password" class="input font-registration form-control" id="passRepeatInput" name="passRepeatInput"
+               placeholder="Повторіть пароль" [(ngModel)]="repeatPassword" #passRepeatInput="ngModel"
+               style="min-height: 3rem;" required>
+
+        <div *ngIf="passRepeatInput.errors && (passRepeatInput.dirty || passRepeatInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+          <div [hidden]="!passRepeatInput.errors.required" class="label">Введіть пароль повторно</div>
+        </div>
+
+        <div *ngIf="passRepeatInput.touched && passRepeatInput.value !== '' && passRepeatInput.value !== passInput.value" class="alert alert-danger" style="margin-top: 1rem;">
+          <div class="label">Паролі не співпадають</div>
+        </div>
+      </div>
+    </form>
+
+    <button type="button" class="btn save-profile-btn"
+            [disabled]="!passForm.valid" (click)="changePassword();">Оновити пароль
+    </button>
   </div>
 </div>

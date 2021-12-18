@@ -18,6 +18,9 @@ export class ProfileComponent implements OnInit {
 
   profile: Profile = new Profile();
 
+  password: string;
+  repeatPassword: string;
+
   constructor(private http: HttpClient, private router: Router) {
   }
 
@@ -50,6 +53,16 @@ export class ProfileComponent implements OnInit {
 
   updateProfile() {
     this.http.put<GenericResponse>(SERVER_URL + '/user/profile', this.profile, HTTP_OPTIONS).toPromise()
+      .then(_ => window.location.reload())
+      .catch(error => {
+        if (error.status === 401) {
+          this.router.navigate(['/login', {originUrl: '/profile'}]);
+        }
+      });
+  }
+
+  changePassword() {
+    this.http.post<GenericResponse>(SERVER_URL + '/user/changePassword', this.password, HTTP_OPTIONS).toPromise()
       .then(_ => window.location.reload())
       .catch(error => {
         if (error.status === 401) {
