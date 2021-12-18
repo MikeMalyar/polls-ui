@@ -41,7 +41,11 @@
 
     <div *ngFor="let poll of polls" id="poll-div-{{poll.id}}" style="background-color: white;
          margin-top: 1rem; border-radius: 5px; padding: 1rem;" [ngClass]="poll.requiredForFilling === true ? 'required-border' : ''">
-      <a href="viewPoll/{{poll.id}}" style="color: #707070; font-weight: bold;">{{poll.title}}</a>
+      <div style="display: flex;">
+        <a href="viewPoll/{{poll.id}}" style="color: #707070; font-weight: bold; width: 100%;">{{poll.title}}</a>
+
+        <a href="viewPoll/{{poll.id}}" class="bi bi-eye-fill" style="margin: auto; font-size: 1.5rem; color: #707070;"></a>
+      </div>
 
       <p *ngIf="poll.description" id="poll-desc-{{poll.id}}" class="text-with-three-dots three-lines-text" style="margin-top: 1rem; margin-bottom: 0;">{{poll.description}}</p>
 
@@ -62,9 +66,12 @@
 
         <button *ngIf="!poll.haveMeVoted" class="btn btn-vote" id="poll-submit-{{poll.id}}" (click)="vote(poll.id);">Проголосувати</button>
       </div>
+
+      <a href="viewPoll/{{poll.id}}" style="color: #707070; font-weight: bold; margin-top: 1rem;">Детальніше >></a>
     </div>
 
     <button *ngIf="polls.length > 0" class="btn btn-create-poll" style="margin-top: 3rem; margin-bottom: 0.5rem;"
             id="loadMoreBtn" (click)="loadMorePolls();">Завантажити ще</button>
   </div>
+</div>
 </div>
