@@ -25,6 +25,7 @@ export class CreateGroupComponent implements OnInit {
   availableUserNames: string[] = [];
 
   memberNameInputValue: string;
+  memberEmailInputValue: string;
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
   }
@@ -36,6 +37,7 @@ export class CreateGroupComponent implements OnInit {
 
     this.group = new Group();
     this.group.memberNames = [];
+    this.group.memberEmails = [];
 
     // якщо цей параметр доступний то редагуємо існуючу групу
     const groupId = this.route.snapshot.paramMap.get('groupId');
@@ -113,6 +115,17 @@ export class CreateGroupComponent implements OnInit {
   }
 
   /*
+    Метод для додавання користувача за електронною адресою
+   */
+  addMemberEmailOption() {
+    if (!this.group.memberEmails.includes(this.memberEmailInputValue)
+      && !this.group.memberNames.includes(this.memberEmailInputValue)) {
+      this.group.memberEmails.push(this.memberEmailInputValue);
+      this.memberEmailInputValue = '';
+    }
+  }
+
+  /*
     Метод для видалення користувача з групи
    */
   removeMemberNameOption(i) {
@@ -122,6 +135,13 @@ export class CreateGroupComponent implements OnInit {
       this.availableUserNames.push(memberName);
       this.availableUserNames.sort();
     }
+  }
+
+  /*
+   Метод для видалення електронної адреси з групи
+  */
+  removeMemberEmailOption(i) {
+    this.group.memberEmails.splice(i, 1);
   }
 
   /*

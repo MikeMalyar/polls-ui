@@ -21,6 +21,15 @@
                 [disabled]="memberName === username" (click)="removeMemberNameOption(i);">&nbsp;x&nbsp;</button>
       </div>
 
+      <div *ngFor="let memberEmail of group.memberEmails; index as i;" id="addedEmails-{{i}}"
+           style="width: 100%; display: flex; margin-top: 0.5rem;">
+        <input type="text" class="input form-control" id="addedEmail-{{i}}" name="addedEmail-{{i}}"
+               autocomplete="off" value="{{memberEmail}}" disabled>
+
+        <button class="btn" style="color: #f3f3f3; background-color: #707070; height: 100%;"
+                (click)="removeMemberEmailOption(i);">&nbsp;x&nbsp;</button>
+      </div>
+
       <h6 style="margin-top: 1rem;">Додати:</h6>
 
       <input id="memberNameInput" name="memberNameInput" class="form-control" list="availableUserNamesList" autocomplete="off"
@@ -66,5 +75,19 @@
     <button type="button" class="btn save-group-btn" *ngIf="!group.id"
             [disabled]="!groupForm.valid" (click)="createGroup();">Створити групу
     </button>
+
+    <p style="margin-top: 3rem;">Додати користувачів за електронними адресами:</p>
+
+    <form #emailForm="ngForm">
+      <input id="memberEmailInput" name="memberEmailInput" class="form-control" autocomplete="off" required
+             placeholder="Вкажіть електронну адресу" [(ngModel)]="memberEmailInputValue" #emailInput="ngModel"
+             pattern="(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|'(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*')@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])">
+      <div *ngIf="emailInput.errors && (emailInput.dirty || emailInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
+        <div class="label">Електронна пошта не відповідає шаблону</div>
+      </div>
+
+      <button type="button" class="btn save-group-btn" style="margin-top: 1rem;"
+              [disabled]="!emailForm.valid" (click)="addMemberEmailOption();">Додати електронну адресу</button>
+    </form>
   </div>
 </div>

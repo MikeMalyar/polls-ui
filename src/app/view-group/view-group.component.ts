@@ -60,7 +60,7 @@ export class ViewGroupComponent implements OnInit {
             poll.haveMeVoted = true;
           }
         });
-        if (length === this.polls.length) {
+        if (length === this.polls.length && length > 0) {
           document.getElementById('loadMoreBtn').style.display = 'none';
         }
       });

@@ -6,4 +6,5 @@ export class Group {
   accessToken: string;
 
   memberNames: string[];
+  memberEmails: string[];
 }

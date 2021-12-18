@@ -31,7 +31,7 @@ export class ProfileComponent implements OnInit {
         }
       });
 
-    this.http.get<GenericResponse>(SERVER_URL + '/group/getLoggedUserGroupsList/0/3', HTTP_OPTIONS).toPromise()
+    this.http.get<GenericResponse>(SERVER_URL + '/group/getLoggedUserGroupsList/0/1000', HTTP_OPTIONS).toPromise()
       .then(data => this.myGroups = data.result)
       .catch(error => {
         if (error.status === 401) {
