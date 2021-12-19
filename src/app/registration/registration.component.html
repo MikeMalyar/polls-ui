@@ -32,10 +32,11 @@
       <form #registrationForm="ngForm">
         <div class="form-group" style="margin-top: 3rem;">
           <input type="text" class="input font-registration form-control" id="fullNameInput" name="fullNameInput" required=""
-                 placeholder="Повне ім'я" style="min-height: 3rem;" [(ngModel)]="registrationDto.fullName" #fullNameInput="ngModel">
+                 placeholder="Повне ім'я" style="min-height: 3rem;" [(ngModel)]="registrationDto.fullName" #fullNameInput="ngModel"
+                 pattern="[ЙЦУКЕНГШЩЗХЇФІВАПРОЛДЖЄЯЧСМИТЬБЮ]{1}[йцукенгшщзхїфівапролджєячсмитьб]*(([ ]|[-])[ЙЦУКЕНГШЩЗХЇФІВАПРОЛДЖЄЯЧСМИТЬБЮ]{1}[йцукенгшщзхїфівапролджєячсмитьб]*){2,10}">
 
           <div *ngIf="fullNameInput.errors && (fullNameInput.dirty || fullNameInput.touched)" class="alert alert-danger" style="margin-top: 1rem;">
-            <div [hidden]="!fullNameInput.errors.required" class="label">Вкажіть повне ім'я</div>
+            <div class="label">Повне ім'я не відповідає шаблону ПІБ</div>
           </div>
         </div>
 

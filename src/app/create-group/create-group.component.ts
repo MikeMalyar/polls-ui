@@ -4,7 +4,7 @@ import {GenericResponse} from '../models/rest';
 import {HTTP_OPTIONS, SERVER_URL} from '../config/http-config';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
-import { v4 as uuid } from 'uuid';
+import {v4 as uuid} from 'uuid';
 
 /*
   Компонент, відповіданьний за сторінки створення та редагування групи
@@ -26,6 +26,8 @@ export class CreateGroupComponent implements OnInit {
 
   memberNameInputValue: string;
   memberEmailInputValue: string;
+
+  userNamesMap = [];
 
   constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
   }
@@ -90,12 +92,28 @@ export class CreateGroupComponent implements OnInit {
       this.group.memberNames.push(this.username);
     }
 
-    // tslint:disable-next-line:prefer-const
-    for (let memberName in this.group.memberNames) {
+    this.group.memberNames.forEach(memberName => {
+      this.userNamesMap.push(memberName);
+      this.http.get<GenericResponse>(SERVER_URL + '/user/fullNameByUserName?username=' + memberName, HTTP_OPTIONS).toPromise()
+        .then(fullName => {
+          if (fullName.result) {
+            this.userNamesMap[memberName] = fullName.result;
+          }
+        });
       if (this.availableUserNames.includes(memberName)) {
         this.availableUserNames.splice(this.availableUserNames.indexOf(memberName), 1);
       }
-    }
+    });
+
+    this.availableUserNames.forEach(username => {
+      this.userNamesMap.push(username);
+      this.http.get<GenericResponse>(SERVER_URL + '/user/fullNameByUserName?username=' + username, HTTP_OPTIONS).toPromise()
+        .then(fullName => {
+          if (fullName.result) {
+            this.userNamesMap[username] = fullName.result;
+          }
+        });
+    });
   }
 
   /*
@@ -103,13 +121,14 @@ export class CreateGroupComponent implements OnInit {
    */
   addMemberNameOption() {
     const memberNameInputValue = this.memberNameInputValue;
-    document.getElementById('availableUserNamesList').childNodes.forEach(child => {
-      // @ts-ignore
-      if (child.innerText === memberNameInputValue) {
+    this.availableUserNames.forEach(username => {
+      if (username === memberNameInputValue) {
         this.group.memberNames.push(memberNameInputValue);
         this.availableUserNames.splice(this.availableUserNames.indexOf(memberNameInputValue), 1);
 
         this.memberNameInputValue = '';
+        // @ts-ignore
+        document.getElementById('memberNameInput').value = '';
       }
     });
   }
