@@ -32,6 +32,7 @@ export class ViewPollComponent implements OnInit {
   adminUserNamesToFullNames = new Map();
 
   adminPanelShown = false;
+  isAdmin = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
   }
@@ -46,6 +47,11 @@ export class ViewPollComponent implements OnInit {
           this.poll = data.result;
           processPollDescription(this.poll);
           this.getUserNamesNotVoted();
+
+          this.http.get<GenericResponse>(SERVER_URL + '/poll/isAdmin/' + this.poll.id, HTTP_OPTIONS).toPromise()
+            .then(result => {
+              this.isAdmin = result.result;
+            });
 
           this.poll.options.forEach(_ => {
             this.displayVotesCount.push(this.DISPLAY_VOTES_COUNT);

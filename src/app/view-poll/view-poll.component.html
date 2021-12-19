@@ -60,7 +60,7 @@
       </div>
     </div>
 
-    <div *ngIf="poll.ownerUsername === loggedUserName" class="view-poll-admin-vote-div">
+    <div *ngIf="poll.ownerUsername === loggedUserName || isAdmin" class="view-poll-admin-vote-div">
       <div style="display: flex;">
         <p style="color: red; width: 100%;">Секція адміністратора</p>
 
