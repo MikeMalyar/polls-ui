@@ -36,6 +36,13 @@
       <label for="groupAccessToken">Посилання для доєднання до групи:</label><br>
       <input type="text" id="groupAccessToken" disabled value="{{selfUrl + 'joinGroup/' + group.accessToken}}"
         style="width: 100%;">
+    </div>
+
+    <div *ngIf="isAdmin" style="margin-top: 1rem; border-color: red; border-style: solid; border-radius: 5px; border-width: 1px;">
+      <label for="groupAdminAccessToken">Посилання для доєднання до групи як адміністратор:</label><br>
+      <input type="text" id="groupAdminAccessToken" disabled value="{{selfUrl + 'joinGroupAsAdmin/' + group.adminAccessToken}}"
+             style="width: 100%;">
+    </div>
 
     <h6 style="margin-top: 1rem;">Опитування групи:</h6>
 
@@ -73,5 +80,4 @@
     <button *ngIf="polls.length > 0" class="btn btn-create-poll" style="margin-top: 3rem; margin-bottom: 0.5rem;"
             id="loadMoreBtn" (click)="loadMorePolls();">Завантажити ще</button>
   </div>
-</div>
 </div>

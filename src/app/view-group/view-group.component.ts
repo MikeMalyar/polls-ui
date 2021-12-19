@@ -26,6 +26,7 @@ export class ViewGroupComponent implements OnInit {
   selfUrl = SELF_URL;
 
   userNamesMap = [];
+  isAdmin = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
   }
@@ -49,6 +50,11 @@ export class ViewGroupComponent implements OnInit {
                 }
               });
           });
+
+          this.http.get<GenericResponse>(SERVER_URL + '/group/isAdmin/' + this.group.id, HTTP_OPTIONS).toPromise()
+            .then(result => {
+              this.isAdmin = result.result;
+            });
         } else {
           this.router.navigate(['**']);
         }

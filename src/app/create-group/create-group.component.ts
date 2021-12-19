@@ -152,6 +152,10 @@ export class CreateGroupComponent implements OnInit {
       // створюємо унікальний токен для доступу до групи
       this.group.accessToken = uuid();
     }
+    if (!this.group.adminAccessToken) {
+      // створюємо унікальний токен для доступу до групи
+      this.group.adminAccessToken = uuid();
+    }
     this.http.post<GenericResponse>(SERVER_URL + '/group/create', this.group, HTTP_OPTIONS).toPromise()
       .then(data => {
         if (data.success) {

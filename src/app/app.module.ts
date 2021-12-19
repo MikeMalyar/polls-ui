@@ -20,6 +20,7 @@ import { FourOFourComponent } from './four-o-four/four-o-four.component';
 import { VerifyTokenComponent } from './verify-token/verify-token.component';
 import { JoinGroupComponent } from './join-group/join-group.component';
 import { CookieService } from 'ngx-cookie-service';
+import { JoinGroupAsAdminComponent } from './join-group-as-admin/join-group-as-admin.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { CookieService } from 'ngx-cookie-service';
     CreateGroupComponent,
     FourOFourComponent,
     VerifyTokenComponent,
-    JoinGroupComponent
+    JoinGroupComponent,
+    JoinGroupAsAdminComponent
   ],
   imports: [
     BrowserModule,
