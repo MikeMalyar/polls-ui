@@ -5,6 +5,7 @@ import {GenericResponse} from '../models/rest';
 import {HTTP_OPTIONS, SERVER_URL, SELF_URL} from '../config/http-config';
 import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
+import {processPollDescription} from '../util/utils';
 
 @Component({
   selector: 'app-view-group',
@@ -68,6 +69,7 @@ export class ViewGroupComponent implements OnInit {
       .then(data => {
         this.polls = this.polls.concat(data.result);
         this.polls.forEach(poll => {
+          processPollDescription(poll);
           if (new Date() > new Date(poll.dueDate)) {
             poll.haveMeVoted = true;
           }
