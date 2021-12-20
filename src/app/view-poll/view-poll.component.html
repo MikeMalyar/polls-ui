@@ -92,6 +92,21 @@
                     [disabled]="!adminVoteForm.form.valid">Проголосувати як адміністратор</button>
           </div>
         </form>
+
+        <form id="adminUnVoteForm" #adminUnVoteForm="ngForm" style="margin-top: 3rem;">
+          <div *ngIf="poll.groupNames && poll.groupNames.length > 0">
+            <p>Відмінити голос користувача:</p>
+
+            <select id="admin-unselect-username" name='admin-unselect-username' class="form-control"
+                    #adminUnSelectUsername="ngModel" [(ngModel)]="adminUnChosenUsername" required>
+              <option disabled></option>
+              <option *ngFor="let username of userNamesVoted" value="{{username}}">{{votedUserNamesToFullNames[username]}}</option>
+            </select>
+
+            <button class="btn btn-danger" style="margin-top: 1rem;" (click)="unVoteAsAdmin();"
+                    [disabled]="!adminUnVoteForm.form.valid">Відмінити як адміністратор</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

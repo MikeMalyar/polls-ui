@@ -26,10 +26,14 @@ export class ViewPollComponent implements OnInit {
   availableUserNamesForAdmin = [];
   availableOptionsForAdmin = [];
 
+  userNamesVoted = [];
+
   adminChosenUsername = '';
   adminChosenOption = '';
+  adminUnChosenUsername = '';
 
   adminUserNamesToFullNames = new Map();
+  votedUserNamesToFullNames = new Map();
 
   adminPanelShown = false;
   isAdmin = false;
@@ -114,6 +118,10 @@ export class ViewPollComponent implements OnInit {
           option.votes++;
           option.usersVoted.push(data.result);
 
+          if (this.isAdmin) {
+            this.getUserNamesNotVoted();
+          }
+
           this.http.get<GenericResponse>(SERVER_URL + '/poll/vote/' + option.id, HTTP_OPTIONS).subscribe();
         } else {
           this.router.navigate(['/login', {originUrl: '/viewPoll/' + pollId}]);
@@ -150,8 +158,25 @@ export class ViewPollComponent implements OnInit {
 
     this.availableUserNamesForAdmin = [];
     this.availableOptionsForAdmin = [];
+    this.userNamesVoted = [];
     this.adminChosenUsername = '';
     this.adminChosenOption = '';
+    this.adminUnChosenUsername = '';
+    this.getUserNamesNotVoted();
+  }
+
+  unVoteFor(username) {
+    const option = this.poll.options.find(pollOption => pollOption.usersVoted.includes(username));
+    option.usersVoted.splice(option.usersVoted.indexOf(username), 1);
+
+    this.http.get<GenericResponse>(SERVER_URL + '/poll/unVoteFor/' + option.id + '?username=' + username, HTTP_OPTIONS).subscribe();
+
+    this.availableUserNamesForAdmin = [];
+    this.availableOptionsForAdmin = [];
+    this.userNamesVoted = [];
+    this.adminChosenUsername = '';
+    this.adminChosenOption = '';
+    this.adminUnChosenUsername = '';
     this.getUserNamesNotVoted();
   }
 
@@ -175,13 +200,22 @@ export class ViewPollComponent implements OnInit {
   getUserNamesNotVoted() {
     this.availableUserNamesForAdmin = [];
     this.adminUserNamesToFullNames = new Map();
-    const userNamesVoted = [];
+    this.userNamesVoted = [];
+    this.votedUserNamesToFullNames = new Map();
     this.poll.options.forEach(option => {
       option.usersVoted.forEach(username => {
-        if (!userNamesVoted.includes(username)) {
-          userNamesVoted.push(username);
+        if (!this.userNamesVoted.includes(username)) {
+          this.userNamesVoted.push(username);
         }
       });
+    });
+    this.userNamesVoted.forEach(username => {
+      this.http.get<GenericResponse>(SERVER_URL + '/user/fullNameByUserName?username=' + username, HTTP_OPTIONS).toPromise()
+        .then(fullName => {
+          if (fullName.result) {
+            this.votedUserNamesToFullNames[username] = fullName.result;
+          }
+        });
     });
     this.poll.groupNames.forEach(groupName => {
       this.http.get<GenericResponse>(SERVER_URL + '/group/getByTitle/' + groupName, HTTP_OPTIONS).toPromise()
@@ -189,7 +223,7 @@ export class ViewPollComponent implements OnInit {
           if (data.result) {
             const group: Group = data.result;
             group.memberNames.forEach(username => {
-              if (!userNamesVoted.includes(username) && !this.availableUserNamesForAdmin.includes(username)) {
+              if (!this.userNamesVoted.includes(username) && !this.availableUserNamesForAdmin.includes(username)) {
                 this.availableUserNamesForAdmin.push(username);
                 this.http.get<GenericResponse>(SERVER_URL + '/user/fullNameByUserName?username=' + username, HTTP_OPTIONS).toPromise()
                   .then(fullName => {
@@ -211,6 +245,10 @@ export class ViewPollComponent implements OnInit {
 
   voteAsAdmin() {
     this.voteFor(this.adminChosenOption, this.adminChosenUsername);
+  }
+
+  unVoteAsAdmin() {
+    this.unVoteFor(this.adminUnChosenUsername);
   }
 
   showAdminPanel() {
