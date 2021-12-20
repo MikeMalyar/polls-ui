@@ -137,11 +137,14 @@ export class CreateGroupComponent implements OnInit {
     Метод для додавання користувача за електронною адресою
    */
   addMemberEmailOption() {
-    if (!this.group.memberEmails.includes(this.memberEmailInputValue)
-      && !this.group.memberNames.includes(this.memberEmailInputValue)) {
-      this.group.memberEmails.push(this.memberEmailInputValue);
-      this.memberEmailInputValue = '';
-    }
+    console.log(this.memberEmailInputValue);
+    this.memberEmailInputValue.split(new RegExp('\n|\n\r|\r\n|\r|,| ')).forEach(memberEmail => {
+      if (!this.group.memberEmails.includes(memberEmail)
+        && !this.group.memberNames.includes(memberEmail)) {
+        this.group.memberEmails.push(memberEmail);
+        this.memberEmailInputValue = '';
+      }
+    });
   }
 
   /*
