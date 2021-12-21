@@ -53,7 +53,9 @@
                  style="height: 2.5rem;">{{option.votes > 0 && poll.canVoteOnlyOnce ? option.value : calculateOptionPercentage(poll.id, option.id) + '%'}}</div>
           </div>
 
-          <div *ngIf="poll.haveMeVoted">{{option.value}} - Голосів: {{option.votes}}</div>
+          <div *ngIf="poll.haveMeVoted && !poll.canVoteOnlyOnce">{{option.value}} - Голосів: {{option.votes}}</div>
+
+          <div *ngIf="poll.canVoteOnlyOnce && isAdmin && option.usersVoted.length > 0">Проголосував (-ла): {{option.fullNamesVoted[option.usersVoted[0]]}}</div>
         </div>
 
         <button *ngIf="!poll.haveMeVoted" class="btn btn-vote" id="poll-submit-{{poll.id}}" (click)="vote(poll.id);">Проголосувати</button>
